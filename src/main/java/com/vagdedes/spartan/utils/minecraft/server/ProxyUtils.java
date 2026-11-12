@@ -5,7 +5,6 @@ import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
 import ai.idealistic.spartan.compatibility.necessary.protocollib.ProtocolLib;
 import com.vagdedes.spartan.functionality.moderation.AwarenessNotifications;
 import com.vagdedes.spartan.functionality.server.Permissions;
-import com.vagdedes.spartan.functionality.server.PluginBase;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

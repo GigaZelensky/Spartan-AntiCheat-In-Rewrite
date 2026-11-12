@@ -3,7 +3,6 @@ package com.vagdedes.spartan.abstraction.configuration.implementation;
 import com.vagdedes.spartan.abstraction.configuration.ConfigurationBuilder;
 import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
 import com.vagdedes.spartan.functionality.moderation.DetectionNotifications;
-import com.vagdedes.spartan.functionality.server.PluginBase;
 
 import java.util.Collection;
 

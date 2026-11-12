@@ -12,7 +12,6 @@ import com.vagdedes.spartan.functionality.moderation.DetectionNotifications;
 import com.vagdedes.spartan.functionality.moderation.Wave;
 import com.vagdedes.spartan.functionality.server.Config;
 import com.vagdedes.spartan.functionality.server.Permissions;
-import com.vagdedes.spartan.functionality.server.PluginBase;
 import com.vagdedes.spartan.utils.math.AlgebraUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;

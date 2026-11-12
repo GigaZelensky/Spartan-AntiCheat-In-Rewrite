@@ -1,6 +1,5 @@
 package com.vagdedes.spartan.functionality.connection;
 
-import com.vagdedes.spartan.functionality.server.TPS;
 import com.vagdedes.spartan.utils.java.OverflowMap;
 import org.bukkit.Location;
 

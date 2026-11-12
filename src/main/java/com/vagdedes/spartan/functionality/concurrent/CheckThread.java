@@ -3,7 +3,6 @@ package com.vagdedes.spartan.functionality.concurrent;
 import com.vagdedes.spartan.Register;
 import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
 import com.vagdedes.spartan.functionality.server.MultiVersion;
-import com.vagdedes.spartan.functionality.server.PluginBase;
 import com.vagdedes.spartan.utils.java.OverflowMap;
 import com.vagdedes.spartan.utils.java.TryIgnore;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;

@@ -7,7 +7,6 @@ import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
 import com.vagdedes.spartan.api.SpartanAPI;
 import com.vagdedes.spartan.functionality.moderation.CrossServerNotifications;
 import com.vagdedes.spartan.functionality.server.MultiVersion;
-import com.vagdedes.spartan.functionality.server.PluginBase;
 import com.vagdedes.spartan.utils.math.AlgebraUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

@@ -11,8 +11,6 @@ import com.vagdedes.spartan.functionality.moderation.Wave;
 import com.vagdedes.spartan.functionality.moderation.clickable.ClickableMessage;
 import com.vagdedes.spartan.functionality.server.Config;
 import com.vagdedes.spartan.functionality.server.Permissions;
-import com.vagdedes.spartan.functionality.server.PluginBase;
-import com.vagdedes.spartan.functionality.server.TPS;
 import com.vagdedes.spartan.listeners.NPCManager;
 import com.vagdedes.spartan.utils.java.StringUtils;
 import com.vagdedes.spartan.utils.math.AlgebraUtils;

@@ -6,7 +6,6 @@ import com.vagdedes.spartan.functionality.connection.IDs;
 import com.vagdedes.spartan.functionality.moderation.AwarenessNotifications;
 import com.vagdedes.spartan.functionality.server.Config;
 import com.vagdedes.spartan.functionality.server.MultiVersion;
-import com.vagdedes.spartan.functionality.server.PluginBase;
 import com.vagdedes.spartan.listeners.NPCManager;
 import ai.idealistic.spartan.listeners.bukkit.*;
 import ai.idealistic.spartan.listeners.bukkit.standalone.*;

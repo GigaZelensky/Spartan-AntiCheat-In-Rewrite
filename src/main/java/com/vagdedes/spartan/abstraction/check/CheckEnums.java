@@ -16,105 +16,10 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CheckEnums {
 
     public enum HackType {
-        HIT_REACH(
+        NAME(
                 HackCategoryType.COMBAT,
-                ai.idealistic.spartan.abstraction.check.implementation.combat.HitReach.class,
+                null, // class
                 Material.ARROW
-        ),
-        CRITICALS(
-                HackCategoryType.COMBAT,
-                ai.idealistic.spartan.abstraction.check.implementation.combat.Criticals.class,
-                Material.REDSTONE
-        ),
-        FAST_CLICKS(
-                HackCategoryType.COMBAT,
-                ai.idealistic.spartan.abstraction.check.implementation.combat.FastClicks.class,
-                Material.LEVER
-        ),
-        VELOCITY(
-                HackCategoryType.COMBAT,
-                ai.idealistic.spartan.abstraction.check.implementation.combat.Velocity.class,
-                Material.CHAINMAIL_BOOTS
-        ),
-        KILL_AURA(
-                HackCategoryType.COMBAT,
-                ai.idealistic.spartan.abstraction.check.implementation.combat.killaura.KillAura.class,
-                Material.IRON_SWORD
-        ),
-        IRREGULAR_MOVEMENTS(
-                HackCategoryType.MOVEMENT,
-                ai.idealistic.spartan.abstraction.check.implementation.movement.irregularmovements.IrregularMovements.class,
-                Material.HOPPER
-        ),
-        GRAVITY_SIMULATION(
-                HackCategoryType.MOVEMENT,
-                GravitySimulation.class,
-                Material.LADDER
-        ),
-        SPEED_SIMULATION(
-                HackCategoryType.MOVEMENT,
-                SpeedSimulation.class,
-                Material.FEATHER
-        ),
-        EXPLOITS(
-                HackCategoryType.MOVEMENT,
-                Exploits.class,
-                Material.TNT
-        ),
-        MORE_PACKETS(
-                HackCategoryType.MOVEMENT,
-                ai.idealistic.spartan.abstraction.check.implementation.movement.MorePackets.class,
-                Material.FLINT_AND_STEEL
-        ),
-        X_RAY(
-                HackCategoryType.WORLD,
-                ai.idealistic.spartan.abstraction.check.implementation.world.XRay.class,
-                Material.GLASS
-        ),
-        IMPOSSIBLE_ACTIONS(
-                HackCategoryType.WORLD,
-                ai.idealistic.spartan.abstraction.check.implementation.world.impossibleactions.ImpossibleActions.class,
-                Material.BEDROCK
-        ),
-        FAST_BREAK(
-                HackCategoryType.WORLD,
-                ai.idealistic.spartan.abstraction.check.implementation.world.FastBreak.class,
-                Material.ENCHANTED_BOOK
-        ),
-        FAST_PLACE(
-                HackCategoryType.WORLD,
-                ai.idealistic.spartan.abstraction.check.implementation.world.FastPlace.class,
-                Material.STONE
-        ),
-        BLOCK_REACH(
-                HackCategoryType.WORLD,
-                ai.idealistic.spartan.abstraction.check.implementation.world.BlockReach.class,
-                Material.FISHING_ROD
-        ),
-        NO_SWING(
-                HackCategoryType.MISCELLANEOUS,
-                ai.idealistic.spartan.abstraction.check.implementation.misc.NoSwing.class,
-                Material.SHEARS
-        ),
-        INVENTORY_CLICKS(
-                HackCategoryType.MISCELLANEOUS,
-                InventoryClicks.class,
-                Material.STONE_BUTTON
-        ),
-        FAST_HEAL(
-                HackCategoryType.MISCELLANEOUS,
-                ai.idealistic.spartan.abstraction.check.implementation.misc.FastHeal.class,
-                Material.APPLE
-        ),
-        IMPOSSIBLE_INVENTORY(
-                HackCategoryType.MISCELLANEOUS,
-                ImpossibleInventory.class,
-                Material.MILK_BUCKET
-        ),
-        FAST_EAT(
-                HackCategoryType.MISCELLANEOUS,
-                ai.idealistic.spartan.abstraction.check.implementation.misc.FastEat.class,
-                Material.CAKE
         );
 
         @Getter

@@ -4,7 +4,6 @@ import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
 import com.vagdedes.spartan.abstraction.world.ServerBlock;
 import com.vagdedes.spartan.abstraction.world.ServerLocation;
 import ai.idealistic.spartan.compatibility.necessary.protocollib.ProtocolLib;
-import com.vagdedes.spartan.functionality.server.PluginBase;
 import com.vagdedes.spartan.utils.minecraft.entity.AxisAlignedBB;
 import com.vagdedes.spartan.utils.minecraft.entity.MovingObjectPosition;
 import com.vagdedes.spartan.utils.minecraft.vector.Vec3;

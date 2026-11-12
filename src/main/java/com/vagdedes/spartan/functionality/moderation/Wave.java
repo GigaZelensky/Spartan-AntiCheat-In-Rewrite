@@ -3,7 +3,6 @@ package com.vagdedes.spartan.functionality.moderation;
 import com.vagdedes.spartan.Register;
 import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
 import com.vagdedes.spartan.functionality.server.Config;
-import com.vagdedes.spartan.functionality.server.PluginBase;
 import com.vagdedes.spartan.utils.minecraft.server.ConfigUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
