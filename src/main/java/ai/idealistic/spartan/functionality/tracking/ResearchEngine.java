@@ -31,8 +31,9 @@ public class ResearchEngine {
     public static Map<CheckEnums.HackType, Collection<Check.DataType>> violationFired = new ConcurrentHashMap<>();
     private static long schedulerTicks = 0L;
     private static final long timestampThreshold = 315_360_000_000L; // ~10 years in ms, anything above is a raw timestamp
-    private static final int minIntervalsPerPlayer = 3, fullConfidencePlayers = 3;
-    private static final double minAverageRatio = 0.1, maxAverageRatio = 3.0;
+    private static final int minIntervalsPerPlayer = 3, minPlayersForEstimate = 3;
+    // The average never becomes stricter than the detection's default, as a lower average makes levels harder to build
+    private static final double minAverageRatio = 1.0, maxAverageRatio = 3.0;
     private static final Map<String, PlayerProfile> playerProfiles = new ConcurrentHashMap<>();
     private static final GeneralThread.ThreadPool statisticsThread = new GeneralThread.ThreadPool(1L);
 
@@ -603,13 +604,13 @@ public class ResearchEngine {
                                         }
                                     }
                                 }
-                                double mean = defaultTime;
+                                // Neutral baseline is the most sensitive one. It only gets stricter when several
+                                // different players violate at short intervals, which indicates false positives,
+                                // so a single player (or cheater) can never lower their own baseline
+                                double mean = defaultTime * maxAverageRatio;
 
-                                if (!playerMedians.isEmpty()) {
-                                    // The more players violate at similar intervals, the more likely it is a
-                                    // false positive, so the estimate is trusted proportionally to the player count
-                                    double confidence = Math.min(playerMedians.size() / (double) fullConfidencePlayers, 1.0);
-                                    mean = defaultTime + (median(playerMedians) - defaultTime) * confidence;
+                                if (playerMedians.size() >= minPlayersForEstimate) {
+                                    mean = median(playerMedians);
                                 }
                                 averageViolationTime.put(
                                         (CheckDetection.generalHashCode(hackType, detection) * PluginBase.hashCodeMultiplier)

@@ -1,0 +1,2 @@
+[#] removed all old checks
+[#] removed all compatibilities

@@ -13,7 +13,7 @@ import ai.idealistic.spartan.abstraction.event.PlayerTickEvent;
 import ai.idealistic.spartan.abstraction.profiling.PlayerProfile;
 import ai.idealistic.spartan.abstraction.world.ServerLocation;
 import ai.idealistic.spartan.compatibility.Compatibility;
-import ai.idealistic.spartan.compatibility.necessary.BedrockCompatibility;
+import ai.idealistic.spartan.compatibility.BedrockCompatibility;
 import ai.idealistic.spartan.compatibility.necessary.protocollib.ProtocolLib;
 import ai.idealistic.spartan.functionality.concurrent.CheckThread;
 import ai.idealistic.spartan.functionality.server.Config;

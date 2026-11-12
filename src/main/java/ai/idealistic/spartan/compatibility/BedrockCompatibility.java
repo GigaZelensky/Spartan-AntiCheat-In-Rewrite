@@ -1,4 +1,4 @@
-package ai.idealistic.spartan.compatibility.necessary;
+package ai.idealistic.spartan.compatibility;
 
 import ai.idealistic.spartan.api.Permission;
 import ai.idealistic.spartan.compatibility.necessary.protocollib.ProtocolLib;

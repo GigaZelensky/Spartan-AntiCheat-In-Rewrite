@@ -6,7 +6,7 @@ import ai.idealistic.spartan.compatibility.manual.abilities.ItemsAdder;
 import ai.idealistic.spartan.compatibility.manual.building.MythicMobs;
 import ai.idealistic.spartan.compatibility.manual.enchants.CustomEnchantsPlus;
 import ai.idealistic.spartan.compatibility.manual.enchants.EcoEnchants;
-import ai.idealistic.spartan.compatibility.manual.vanilla.Attributes;
+import ai.idealistic.spartan.compatibility.Attributes;
 import ai.idealistic.spartan.compatibility.necessary.protocollib.ProtocolLib;
 import ai.idealistic.spartan.functionality.moderation.DetectionNotifications;
 import ai.idealistic.spartan.functionality.server.MultiVersion;

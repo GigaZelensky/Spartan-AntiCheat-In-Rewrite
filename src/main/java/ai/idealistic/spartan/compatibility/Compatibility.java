@@ -11,7 +11,6 @@ import ai.idealistic.spartan.compatibility.manual.building.*;
 import ai.idealistic.spartan.compatibility.manual.damage.RealDualWield;
 import ai.idealistic.spartan.compatibility.manual.entity.CraftBook;
 import ai.idealistic.spartan.compatibility.manual.entity.Vehicles;
-import ai.idealistic.spartan.compatibility.necessary.Floodgate;
 import ai.idealistic.spartan.compatibility.necessary.protocollib.ProtocolLib;
 import ai.idealistic.spartan.functionality.moderation.AwarenessNotifications;
 import ai.idealistic.spartan.functionality.server.MultiVersion;

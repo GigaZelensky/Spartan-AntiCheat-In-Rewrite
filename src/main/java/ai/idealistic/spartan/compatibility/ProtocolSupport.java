@@ -1,6 +1,5 @@
-package ai.idealistic.spartan.compatibility.necessary;
+package ai.idealistic.spartan.compatibility;
 
-import ai.idealistic.spartan.compatibility.Compatibility;
 import org.bukkit.entity.Player;
 import protocolsupport.api.Connection;
 import protocolsupport.api.ProtocolSupportAPI;

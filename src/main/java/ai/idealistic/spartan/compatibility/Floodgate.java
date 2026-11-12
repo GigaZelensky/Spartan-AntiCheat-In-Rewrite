@@ -1,6 +1,5 @@
-package ai.idealistic.spartan.compatibility.necessary;
+package ai.idealistic.spartan.compatibility;
 
-import ai.idealistic.spartan.compatibility.Compatibility;
 import ai.idealistic.spartan.functionality.server.Config;
 import ai.idealistic.spartan.utils.java.ReflectionUtils;
 import org.geysermc.floodgate.api.FloodgateApi;

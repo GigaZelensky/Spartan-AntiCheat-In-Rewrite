@@ -1,7 +1,6 @@
-package ai.idealistic.spartan.compatibility.manual.vanilla;
+package ai.idealistic.spartan.compatibility;
 
 import ai.idealistic.spartan.abstraction.protocol.PlayerProtocol;
-import ai.idealistic.spartan.compatibility.Compatibility;
 import ai.idealistic.spartan.functionality.server.MultiVersion;
 import ai.idealistic.spartan.utils.java.ReflectionUtils;
 import org.bukkit.attribute.Attribute;
