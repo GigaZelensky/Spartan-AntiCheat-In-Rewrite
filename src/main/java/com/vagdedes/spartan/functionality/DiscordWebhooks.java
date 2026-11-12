@@ -1,6 +1,7 @@
 package com.vagdedes.spartan.functionality;
 
 import com.vagdedes.spartan.Register;
+import com.vagdedes.spartan.files.ConfigManagement;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
@@ -17,7 +18,7 @@ public class DiscordWebhooks {
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public static void execute(String webhook, UUID uuid, String name, int ping, int x, int y, int z, String type, String information) {
-        String urlString = Config.settings.getString("Discord." + webhook + "_webhook_url");
+        String urlString = ConfigManagement.settings.getString("Discord." + webhook + "_webhook_url");
 
         if (urlString == null
                 || (!urlString.startsWith("https://") && !urlString.startsWith("http://"))) {
@@ -25,11 +26,11 @@ public class DiscordWebhooks {
         }
         executor.submit(() -> {
             try {
-                String serverName = Config.settings.getString("Discord.server_name");
+                String serverName = ConfigManagement.settings.getString("Discord.server_name");
                 String titleSuffix = (serverName != null && !serverName.isEmpty() && !serverName.equals("NULL"))
                         ? " (" + serverName + ")"
                         : "";
-                String colorHex = Config.settings.getString("Discord.webhook_hex_color");
+                String colorHex = ConfigManagement.settings.getString("Discord.webhook_hex_color");
                 int colorDecimal = 0;
 
                 try {

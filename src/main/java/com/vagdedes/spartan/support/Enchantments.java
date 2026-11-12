@@ -1,4 +1,4 @@
-package com.vagdedes.spartan.compatibility;
+package com.vagdedes.spartan.support;
 
 public class Enchantments {
 

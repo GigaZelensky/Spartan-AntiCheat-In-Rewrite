@@ -1,4 +1,4 @@
-package com.vagdedes.spartan.utils;
+package com.vagdedes.spartan.math;
 
 import com.vagdedes.spartan.abstraction.world.ServerLocation;
 import lombok.experimental.UtilityClass;

@@ -1,4 +1,4 @@
-package com.vagdedes.spartan.utils;
+package com.vagdedes.spartan.files;
 
 import com.vagdedes.spartan.Register;
 import org.bukkit.ChatColor;
@@ -8,7 +8,7 @@ import java.io.File;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public abstract class ConfigurationBuilder {
+public abstract class ConfigBuilder {
 
     public static String getDirectory(String fileName) {
         return Register.plugin.getDataFolder() + "/" + fileName + ".yml";
@@ -26,7 +26,7 @@ public abstract class ConfigurationBuilder {
     private final Map<String, Double> dbls = new ConcurrentHashMap<>();
     private final Map<String, String> str = new ConcurrentHashMap<>();
 
-    public ConfigurationBuilder(String fileName) {
+    public ConfigBuilder(String fileName) {
         this.file = new File(getDirectory(fileName));
     }
 
@@ -136,12 +136,12 @@ public abstract class ConfigurationBuilder {
     }
 
     public final void setOption(String name, Object value) {
-        ConfigUtils.set(file, name, value);
+        ConfigManagement.set(file, name, value);
         clearOption(name);
     }
 
     protected final void addOption(String name, Object value) {
-        ConfigUtils.add(file, name, value);
+        ConfigManagement.add(file, name, value);
         clearOption(name);
     }
 

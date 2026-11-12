@@ -1,26 +1,15 @@
-package com.vagdedes.spartan.utils;
+package com.vagdedes.spartan.support;
 
-import com.vagdedes.spartan.abstraction.protocol.ExtendedPotionEffect;
-import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
-import com.vagdedes.spartan.abstraction.world.ServerBlock;
-import com.vagdedes.spartan.abstraction.world.ServerLocation;
-import com.vagdedes.spartan.compatibility.Enchantments;
-import com.vagdedes.spartan.functionality.MultiVersion;
 import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 
 import java.util.*;
 
-public class MaterialUtils {
+public class Materials {
 
     private static final Map<String, Material> alternative = new LinkedHashMap<>(2);
-    private static final Map<Material, Double> baseMultiplier = new LinkedHashMap<>(2);
-    private static final double specialMultiplier = 1.5;
 
     static {
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_13)) {
             alternative.put("water", Material.WATER);
             alternative.put("lava", Material.LAVA);
             alternative.put("web", Material.COBWEB);
@@ -135,74 +124,10 @@ public class MaterialUtils {
                 "GOLDEN_SPEAR",
                 "NETHERITE_SPEAR"
         }) {
-            Material m = MaterialUtils.findMaterial(s);
+            Material m = Materials.findMaterial(s);
 
             if (m != null) {
                 alternative.put(s.toLowerCase(), m);
-            }
-        }
-
-        for (Material m : Material.values()) {
-            String s = m.toString();
-
-            if (BlockUtils.endsWith(s, "_SWORD")) {
-                baseMultiplier.put(m, specialMultiplier);
-            } else {
-                switch (s) {
-                    case "DIAMOND_PICKAXE":
-                    case "DIAMOND_AXE":
-                    case "DIAMOND_HOE":
-                    case "DIAMOND_SHOVEL":
-                    case "DIAMOND_SPADE":
-                        baseMultiplier.put(m, 8.0);
-                        break;
-                    case "NETHERITE_PICKAXE":
-                    case "NETHERITE_AXE":
-                    case "NETHERITE_HOE":
-                    case "NETHERITE_SHOVEL":
-                        baseMultiplier.put(m, 9.0);
-                        break;
-                    case "STONE_PICKAXE":
-                    case "STONE_AXE":
-                    case "STONE_HOE":
-                    case "STONE_SHOVEL":
-                    case "STONE_SPADE":
-                        baseMultiplier.put(m, 4.0);
-                        break;
-                    case "IRON_PICKAXE":
-                    case "IRON_AXE":
-                    case "IRON_HOE":
-                    case "IRON_SHOVEL":
-                    case "IRON_SPADE":
-                        baseMultiplier.put(m, 6.0);
-                        break;
-                    case "WOODEN_PICKAXE":
-                    case "WOOD_PICKAXE":
-                    case "WOODEN_AXE":
-                    case "WOOD_AXE":
-                    case "WOODEN_HOE":
-                    case "WOOD_HOE":
-                    case "WOODEN_SHOVEL":
-                    case "WOOD_SHOVEL":
-                    case "WOOD_SPADE":
-                        baseMultiplier.put(m, 2.0);
-                        break;
-                    case "GOLDEN_PICKAXE":
-                    case "GOLD_PICKAXE":
-                    case "GOLDEN_AXE":
-                    case "GOLD_AXE":
-                    case "GOLDEN_HOE":
-                    case "GOLD_HOE":
-                    case "GOLDEN_SHOVEL":
-                    case "GOLD_SHOVEL":
-                    case "GOLD_SPADE":
-                        baseMultiplier.put(m, 12.0);
-                        break;
-                    case "SHEARS":
-                        baseMultiplier.put(m, specialMultiplier);
-                    default:
-                        break;
-                }
             }
         }
     }
@@ -211,128 +136,10 @@ public class MaterialUtils {
         return alternative.get(s.toLowerCase());
     }
 
-    public static Material correct(String recent, String older) {
-        return Material.getMaterial(MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13) ? recent.toUpperCase() : older.toUpperCase());
-    }
-
-    public static long getBlockBreakTime(PlayerProtocol protocol, ItemStack itemStack, Material blockType) {
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13) && blockType.isBlock()) {
-            double multiplier = baseMultiplier.getOrDefault(itemStack.getType(), 1.0);
-            boolean canHarvest = true; // No need for method, players cannot break such blocks, thus they will never be checked
-
-            // Separator (Custom)
-            if (multiplier == specialMultiplier) {
-                if (itemStack.getType() == Material.SHEARS) {
-                    if (BlockUtils.areWebs(blockType) || BlockUtils.areLeaves(blockType)) {
-                        multiplier = 15.0;
-                    } else if (BlockUtils.areWools(blockType)) {
-                        multiplier = 5.0;
-                    }
-                } else if (BlockUtils.areWebs(blockType)) {
-                    multiplier = 15.0;
-                }
-            }
-
-            // Separator
-            if (true) { // Ideal Tool (Method missing, no serious problems arise) [Example: Pickaxe for stone blocks]
-                if (!canHarvest) {
-                    multiplier = 1.0;
-                } else {
-                    int enchantmentLevel = itemStack.getEnchantmentLevel(Enchantments.DIG_SPEED);
-
-                    if (enchantmentLevel > 0) {
-                        multiplier += Math.pow(enchantmentLevel, 2) + 1.0;
-                    }
-                }
-            }
-
-            // Separator
-            ExtendedPotionEffect hasteEffect = protocol.getPotionEffect(PotionEffectUtils.FAST_DIGGING, 0L);
-
-            if (hasteEffect != null
-                    && hasteEffect.isActive()) {
-                multiplier *= (0.2 * hasteEffect.bukkitEffect.getAmplifier()) + 1.0;
-            }
-
-            // Separator
-            ExtendedPotionEffect miningFatigueEffect = protocol.getPotionEffect(PotionEffectUtils.SLOW_DIGGING, 0);
-
-            if (miningFatigueEffect != null
-                    && miningFatigueEffect.isActive()) {
-                multiplier *= Math.pow(miningFatigueEffect.bukkitEffect.getAmplifier(), 0.3);
-            }
-
-            // Separator
-            boolean water;
-
-            if (protocol.isSwimming()) {
-                water = true;
-            } else {
-                ServerBlock block = new ServerLocation(protocol.getLocation()).add(0, protocol.getEyeHeight(), 0).getBlock(protocol);
-                water = block.isWaterLogged() || block.getType() == MaterialUtils.get("water");
-            }
-            if (water) {
-                boolean aquaInfinity = false;
-
-                if (itemStack.getEnchantmentLevel(Enchantments.WATER_WORKER) > 0) {
-                    aquaInfinity = true;
-                } else {
-                    PlayerInventory inventory = protocol.getInventory();
-                    List<ItemStack> items = new ArrayList<>(4 + 1);
-                    items.addAll(Arrays.asList(inventory.getArmorContents()));
-                    items.add(inventory.getItemInHand());
-
-                    for (ItemStack item : items) {
-                        if (item != null && item.getEnchantmentLevel(Enchantments.WATER_WORKER) > 0) {
-                            aquaInfinity = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (!aquaInfinity) {
-                    multiplier /= 5.0;
-                }
-            }
-            if (!protocol.isOnGround()) {
-                multiplier /= 5.0;
-            }
-
-            // Separator
-            double damage = multiplier / blockType.getHardness();
-
-            // Separator
-            if (canHarvest) {
-                damage /= 30.0;
-            } else {
-                damage /= 100.0;
-            }
-
-            // Separator
-            if (damage > 1.0) {
-                return 0L;
-            }
-
-            // Separator
-            double ticks = Math.ceil(1.0 / damage);
-            return AlgebraUtils.integerRound(ticks * TPS.tickTime);
-        }
-        return -1L;
-    }
-
     public static Material findMaterial(String string) {
         for (Material material : Material.values()) {
             if (material.toString().equals(string)) {
                 return material;
-            }
-        }
-        return null;
-    }
-
-    public static World.Environment findEnvironment(String string) {
-        for (World.Environment environment : World.Environment.values()) {
-            if (string.toString().equals(string)) {
-                return environment;
             }
         }
         return null;

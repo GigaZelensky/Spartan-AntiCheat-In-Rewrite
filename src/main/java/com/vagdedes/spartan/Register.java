@@ -1,10 +1,10 @@
 package com.vagdedes.spartan;
 
-import com.vagdedes.spartan.functionality.CommandExecution;
-import com.vagdedes.spartan.functionality.CommandTab;
-import com.vagdedes.spartan.functionality.Config;
-import com.vagdedes.spartan.functionality.MultiVersion;
-import com.vagdedes.spartan.utils.AlgebraUtils;
+import com.vagdedes.spartan.commands.CommandExecution;
+import com.vagdedes.spartan.commands.CommandTab;
+import com.vagdedes.spartan.files.ConfigManagement;
+import com.vagdedes.spartan.support.Versions;
+import com.vagdedes.spartan.math.AlgebraUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -37,7 +37,7 @@ public class Register extends JavaPlugin {
     public void onEnable() {
         plugin = this;
 
-        if (MultiVersion.serverVersion == MultiVersion.MCVersion.OTHER) {
+        if (Versions.serverVersion == Versions.MCVersion.OTHER) {
             Bukkit.getConsoleSender().sendMessage(
                     "[Spartan] The server's version or type is not supported. "
                             + "Please contact the plugin's developer if you think this is an error."
@@ -45,7 +45,7 @@ public class Register extends JavaPlugin {
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
-        Config.create();
+        ConfigManagement.create();
         //enable(new EventClass());
         this.getCommand(command).setExecutor(new CommandExecution());
         this.getCommand(command).setTabCompleter(new CommandTab());
@@ -66,6 +66,10 @@ public class Register extends JavaPlugin {
 
     public static boolean isPluginEnabled() {
         return plugin != null && plugin.isEnabled();
+    }
+
+    public static String getVersion() {
+        return plugin == null ? "" : plugin.getDescription().getVersion();
     }
 
 }

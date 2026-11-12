@@ -1,45 +1,27 @@
-package com.vagdedes.spartan.utils;
+package com.vagdedes.spartan.support;
 
-import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
-import com.vagdedes.spartan.abstraction.world.ServerBlock;
-import com.vagdedes.spartan.abstraction.world.ServerLocation;
-import com.vagdedes.spartan.functionality.MultiVersion;
-import ai.idealistic.spartan.listeners.bukkit.standalone.ChunksEvent;
-import com.vagdedes.spartan.utils.java.ReflectionUtils;
-import lombok.experimental.UtilityClass;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Waterlogged;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@UtilityClass
-public class BlockUtils {
-
-    public static final int[][] DIRS = {
-            {1, 0, 0},
-            {-1, 0, 0},
-            {0, 0, 1},
-            {0, 0, -1},
-            {0, 1, 0},
-            {0, -1, 0}
-    };
+public class Blocks {
 
     public static boolean blockDataExists = ReflectionUtils.classExists(
             "org.bukkit.block.data.BlockData"
     );
     public static final long sensitiveBlockBreakTime = 250L;
     public static final Material
-            head = MaterialUtils.get("head"),
-            iron_bars = MaterialUtils.get("iron_bars"),
-            cake = MaterialUtils.get("cake"),
-            magma = MaterialUtils.get("magma"),
-            beetroot_block = MaterialUtils.get("beetroot_block");
+            head = Materials.get("head"),
+            iron_bars = Materials.get("iron_bars"),
+            cake = Materials.get("cake"),
+            magma = Materials.get("magma"),
+            beetroot_block = Materials.get("beetroot_block");
 
     public static final Set<Material> air, solid, sensitive, editable, chest, plate, ice, blue_ice, glass, glass_pane, slabs,
             climbable, climbableOriginal, door, entity_blocks, trap_door, liquid, banner, carpet, bed, shulker_box, stairs,
@@ -66,7 +48,7 @@ public class BlockUtils {
                 helper = new HashSet<>();
         Material[] materials = Material.values();
 
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_13)) {
             builder.add(Material.BUBBLE_COLUMN);
             builder.add(Material.KELP);
             builder.add(Material.KELP_PLANT);
@@ -84,9 +66,9 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
-            if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_14)) {
-                if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_17)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_13)) {
+            if (Versions.isOrGreater(Versions.MCVersion.V1_14)) {
+                if (Versions.isOrGreater(Versions.MCVersion.V1_17)) {
                     builder.add(Material.GLOW_ITEM_FRAME);
                 }
                 builder.add(Material.SMITHING_TABLE);
@@ -119,14 +101,14 @@ public class BlockUtils {
         builder.add(Material.BREWING_STAND);
         builder.add(Material.LEVER);
         builder.add(Material.ANVIL);
-        builder.add(MaterialUtils.get("crafting_table"));
-        builder.add(MaterialUtils.get("repeater_on"));
-        builder.add(MaterialUtils.get("repeater_off"));
-        builder.add(MaterialUtils.get("comparator_on"));
-        builder.add(MaterialUtils.get("comparator_off"));
-        builder.add(MaterialUtils.get("enchanting_table"));
-        builder.add(MaterialUtils.get("end_portal_frame"));
-        builder.add(MaterialUtils.get("furnace"));
+        builder.add(Materials.get("crafting_table"));
+        builder.add(Materials.get("repeater_on"));
+        builder.add(Materials.get("repeater_off"));
+        builder.add(Materials.get("comparator_on"));
+        builder.add(Materials.get("comparator_off"));
+        builder.add(Materials.get("enchanting_table"));
+        builder.add(Materials.get("end_portal_frame"));
+        builder.add(Materials.get("furnace"));
         editable = new HashSet<>(builder);
 
         // Separator
@@ -140,7 +122,7 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_13)) {
             for (Material m : materials) {
                 String s = m.toString();
 
@@ -159,7 +141,7 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        builder.add(MaterialUtils.get("web"));
+        builder.add(Materials.get("web"));
         web = new HashSet<>(builder);
 
         // Separator
@@ -192,7 +174,7 @@ public class BlockUtils {
         builder.add(Material.ICE);
         builder.add(Material.PACKED_ICE);
 
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_9)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_9)) {
             builder.add(Material.FROSTED_ICE);
         }
         ice = new HashSet<>(builder);
@@ -201,8 +183,8 @@ public class BlockUtils {
 
         builder.clear();
 
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_9)
-                && MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_9)
+                && Versions.isOrGreater(Versions.MCVersion.V1_13)) {
             builder.add(Material.BLUE_ICE);
         }
         blue_ice = new HashSet<>(builder);
@@ -210,7 +192,7 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_13)) {
             builder.add(Material.GLASS_PANE);
 
             for (Material m : materials) {
@@ -229,8 +211,8 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
-            if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_20)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_13)) {
+            if (Versions.isOrGreater(Versions.MCVersion.V1_20)) {
                 builder.add(Material.BAMBOO_BLOCK);
                 builder.add(Material.STRIPPED_BAMBOO_BLOCK);
                 builder.add(Material.BAMBOO_MOSAIC);
@@ -254,7 +236,7 @@ public class BlockUtils {
         builder.clear();
         builder.add(Material.AIR);
 
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_13)) {
             for (Material m : materials) {
                 String s = m.toString();
 
@@ -268,7 +250,7 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) { //
+        if (Versions.isOrGreater(Versions.MCVersion.V1_13)) { //
             for (Material m : materials) {
                 String s = m.toString();
 
@@ -285,7 +267,7 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (!MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
+        if (!Versions.isOrGreater(Versions.MCVersion.V1_13)) {
             builder.add(Material.getMaterial("STEP"));
             builder.add(Material.getMaterial("WOOD_STEP"));
         }
@@ -318,8 +300,8 @@ public class BlockUtils {
         builder.clear();
         builder.addAll(climbableOriginal);
 
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_14)) {
-            if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_17)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_14)) {
+            if (Versions.isOrGreater(Versions.MCVersion.V1_17)) {
                 builder.add(Material.POWDER_SNOW);
             }
             builder.add(Material.SCAFFOLDING);
@@ -332,8 +314,8 @@ public class BlockUtils {
         builder.add(Material.SAND);
         builder.add(Material.GRAVEL);
 
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_12)) {
-            if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_12)) {
+            if (Versions.isOrGreater(Versions.MCVersion.V1_13)) {
                 for (Material m : materials) {
                     String s = m.toString();
 
@@ -350,7 +332,7 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_13)) {
             builder.add(Material.TERRACOTTA);
 
             for (Material m : materials) {
@@ -368,7 +350,7 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_13)) {
             for (Material m : materials) {
                 String s = m.toString();
 
@@ -384,7 +366,7 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_12)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_12)) {
             for (Material m : materials) {
                 String s = m.toString();
 
@@ -398,10 +380,10 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
-            if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_16)) {
-                if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_19)) {
-                    if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_20)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_13)) {
+            if (Versions.isOrGreater(Versions.MCVersion.V1_16)) {
+                if (Versions.isOrGreater(Versions.MCVersion.V1_19)) {
+                    if (Versions.isOrGreater(Versions.MCVersion.V1_20)) {
                         builder.add(Material.BAMBOO_DOOR);
                     }
                     builder.add(Material.MANGROVE_DOOR);
@@ -415,7 +397,7 @@ public class BlockUtils {
             builder.add(Material.getMaterial("IRON_DOOR_BLOCK"));
             builder.add(Material.getMaterial("WOODEN_DOOR"));
         }
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_8)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_8)) {
             builder.add(Material.ACACIA_DOOR);
             builder.add(Material.BIRCH_DOOR);
             builder.add(Material.DARK_OAK_DOOR);
@@ -427,7 +409,7 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_13)) {
             for (Material m : materials) {
                 String s = m.toString();
 
@@ -438,7 +420,7 @@ public class BlockUtils {
         } else {
             builder.add(Material.getMaterial("TRAP_DOOR"));
 
-            if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_8)) {
+            if (Versions.isOrGreater(Versions.MCVersion.V1_8)) {
                 builder.add(Material.IRON_TRAPDOOR);
             }
         }
@@ -447,7 +429,7 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_13)) {
             for (Material m : materials) {
                 String s = m.toString();
 
@@ -463,7 +445,7 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_13)) {
             for (Material m : materials) {
                 String s = m.toString();
 
@@ -479,7 +461,7 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_13)) {
             for (Material m : materials) {
                 String s = m.toString();
 
@@ -496,11 +478,11 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_11)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_11)) {
             for (Material m : materials) {
                 String s = m.toString();
 
-                if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
+                if (Versions.isOrGreater(Versions.MCVersion.V1_13)) {
                     builder.add(Material.SHULKER_BOX);
                 }
                 if (endsWith(s, "_SHULKER_BOX")) {
@@ -525,7 +507,7 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (!MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
+        if (!Versions.isOrGreater(Versions.MCVersion.V1_13)) {
             builder.add(Material.getMaterial("FENCE"));
         }
         for (Material m : materials) {
@@ -540,7 +522,7 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_17)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_17)) {
             for (Material m : materials) {
                 String s = m.toString();
 
@@ -554,7 +536,7 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_17)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_17)) {
             for (Material m : materials) {
                 String s = m.toString();
 
@@ -568,7 +550,7 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_17)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_17)) {
             for (Material m : materials) {
                 String s = m.toString();
 
@@ -582,7 +564,7 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (!MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
+        if (!Versions.isOrGreater(Versions.MCVersion.V1_13)) {
             builder.add(Material.getMaterial("FENCE_GATE"));
         }
         for (Material m : materials) {
@@ -597,7 +579,7 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_13)) {
             builder.add(Material.SKELETON_SKULL);
             builder.add(Material.SKELETON_WALL_SKULL);
             builder.add(Material.WITHER_SKELETON_SKULL);
@@ -618,7 +600,7 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_13)) {
             for (Material m : materials) {
                 String s = m.toString();
 
@@ -633,7 +615,7 @@ public class BlockUtils {
         leaves = new HashSet<>(builder);
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_13)) {
             for (Material m : materials) {
                 String s = m.toString();
 
@@ -649,7 +631,7 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_13)) {
             builder.add(Material.BRAIN_CORAL_FAN);
             builder.add(Material.BRAIN_CORAL);
             builder.add(Material.DEAD_BRAIN_CORAL_FAN);
@@ -686,7 +668,7 @@ public class BlockUtils {
 
         builder.clear();
         builder.add(Material.FLOWER_POT);
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_13)) {
             for (Material m : materials) {
                 String s = m.toString();
 
@@ -700,7 +682,7 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_13)) {
             builder.add(Material.ANVIL);
             builder.add(Material.CHIPPED_ANVIL);
             builder.add(Material.DAMAGED_ANVIL);
@@ -724,7 +706,7 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_17)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_17)) {
             builder.add(Material.POWDER_SNOW);
         }
         interactive_snow = new HashSet<>(builder);
@@ -732,7 +714,7 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_14)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_14)) {
             builder.add(Material.SCAFFOLDING);
         }
         scaffolding = new HashSet<>(builder);
@@ -754,7 +736,7 @@ public class BlockUtils {
 
         builder.clear();
 
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_13)) {
             builder.add(Material.PISTON);
             builder.add(Material.STICKY_PISTON);
         } else {
@@ -766,11 +748,11 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
-            if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_14)) {
-                if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_16)) {
-                    if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_17)) {
-                        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_19)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_13)) {
+            if (Versions.isOrGreater(Versions.MCVersion.V1_14)) {
+                if (Versions.isOrGreater(Versions.MCVersion.V1_16)) {
+                    if (Versions.isOrGreater(Versions.MCVersion.V1_17)) {
+                        if (Versions.isOrGreater(Versions.MCVersion.V1_19)) {
                             helper.add(Material.SCULK_SENSOR);
                             helper.add(Material.SCULK_SHRIEKER);
                             helper.add(Material.MUD);
@@ -815,7 +797,7 @@ public class BlockUtils {
             helper.add(Material.TURTLE_EGG);
             helper.add(Material.CONDUIT);
         } else {
-            if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_9)) {
+            if (Versions.isOrGreater(Versions.MCVersion.V1_9)) {
                 helper.add(Material.CHORUS_PLANT);
                 helper.add(Material.END_CRYSTAL);
                 helper.add(Material.END_ROD);
@@ -837,7 +819,7 @@ public class BlockUtils {
                 helper.add(m);
             }
         }
-        helper.add(MaterialUtils.get("web"));
+        helper.add(Materials.get("web"));
         helper.add(Material.COCOA);
         helper.add(Material.DRAGON_EGG);
         helper.add(Material.HOPPER);
@@ -850,16 +832,16 @@ public class BlockUtils {
         helper.add(Material.SNOW_BLOCK);
         helper.add(Material.CACTUS);
         helper.add(Material.SOUL_SAND);
-        helper.add(MaterialUtils.get("daylight_detector_1"));
-        helper.add(MaterialUtils.get("daylight_detector_2"));
-        helper.add(MaterialUtils.get("repeater_on"));
-        helper.add(MaterialUtils.get("repeater_off"));
-        helper.add(MaterialUtils.get("comparator_on"));
-        helper.add(MaterialUtils.get("comparator_off"));
-        helper.add(MaterialUtils.get("enchanting_table"));
-        helper.add(MaterialUtils.get("lily_pad"));
-        helper.add(MaterialUtils.get("end_portal_frame"));
-        helper.add(MaterialUtils.get("cake"));
+        helper.add(Materials.get("daylight_detector_1"));
+        helper.add(Materials.get("daylight_detector_2"));
+        helper.add(Materials.get("repeater_on"));
+        helper.add(Materials.get("repeater_off"));
+        helper.add(Materials.get("comparator_on"));
+        helper.add(Materials.get("comparator_off"));
+        helper.add(Materials.get("enchanting_table"));
+        helper.add(Materials.get("lily_pad"));
+        helper.add(Materials.get("end_portal_frame"));
+        helper.add(Materials.get("cake"));
 
         for (Material m : materials) {
             if (areFenceGates(m)
@@ -911,7 +893,7 @@ public class BlockUtils {
         builder.clear();
         helper.clear();
 
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_14)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_14)) {
             helper.add(Material.SCAFFOLDING);
             helper.add(Material.WITHER_ROSE);
             helper.add(Material.SWEET_BERRY_BUSH);
@@ -927,11 +909,11 @@ public class BlockUtils {
                 helper.add(m);
             }
         }
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
-            if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_16)) {
-                if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_17)) {
-                    if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_19)) {
-                        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_20)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_13)) {
+            if (Versions.isOrGreater(Versions.MCVersion.V1_16)) {
+                if (Versions.isOrGreater(Versions.MCVersion.V1_17)) {
+                    if (Versions.isOrGreater(Versions.MCVersion.V1_19)) {
+                        if (Versions.isOrGreater(Versions.MCVersion.V1_20)) {
                             helper.add(Material.PINK_PETALS);
                         }
                         helper.add(Material.SCULK_VEIN);
@@ -1040,9 +1022,9 @@ public class BlockUtils {
                 helper.add(m);
             }
         }
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_8)) {
-            if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_9)) {
-                if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_10)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_8)) {
+            if (Versions.isOrGreater(Versions.MCVersion.V1_9)) {
+                if (Versions.isOrGreater(Versions.MCVersion.V1_10)) {
                     helper.add(Material.STRUCTURE_VOID);
                 }
                 helper.add(Material.BEETROOT_SEEDS);
@@ -1089,17 +1071,17 @@ public class BlockUtils {
 
         builder.clear();
         helper.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_9)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_9)) {
             helper.add(Material.END_CRYSTAL);
             helper.add(Material.CHORUS_PLANT);
         }
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_13)) {
-            if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_14)) {
-                if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_15)) {
-                    if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_16)) {
-                        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_17)) {
-                            if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_19)) {
-                                if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V26_1)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_13)) {
+            if (Versions.isOrGreater(Versions.MCVersion.V1_14)) {
+                if (Versions.isOrGreater(Versions.MCVersion.V1_15)) {
+                    if (Versions.isOrGreater(Versions.MCVersion.V1_16)) {
+                        if (Versions.isOrGreater(Versions.MCVersion.V1_17)) {
+                            if (Versions.isOrGreater(Versions.MCVersion.V1_19)) {
+                                if (Versions.isOrGreater(Versions.MCVersion.V26_1)) {
                                     helper.add(Material.getMaterial("GOLDEN_DANDELION"));
                                 }
                                 helper.add(Material.MUD);
@@ -1138,9 +1120,9 @@ public class BlockUtils {
                 }
             }
         } else {
-            if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_8)) {
-                if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_9)) {
-                    if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_10)) {
+            if (Versions.isOrGreater(Versions.MCVersion.V1_8)) {
+                if (Versions.isOrGreater(Versions.MCVersion.V1_9)) {
+                    if (Versions.isOrGreater(Versions.MCVersion.V1_10)) {
                         helper.add(magma);
                     }
                     helper.add(Material.END_ROD);
@@ -1167,14 +1149,14 @@ public class BlockUtils {
         helper.add(Material.SNOW_BLOCK);
         helper.add(Material.SOUL_SAND);
         helper.add(Material.PUMPKIN);
-        helper.add(MaterialUtils.get("lily_pad"));
-        helper.add(MaterialUtils.get("daylight_detector_1"));
-        helper.add(MaterialUtils.get("daylight_detector_2"));
-        helper.add(MaterialUtils.get("repeater_on"));
-        helper.add(MaterialUtils.get("repeater_off"));
-        helper.add(MaterialUtils.get("comparator_on"));
-        helper.add(MaterialUtils.get("comparator_off"));
-        helper.add(MaterialUtils.get("enchanting_table"));
+        helper.add(Materials.get("lily_pad"));
+        helper.add(Materials.get("daylight_detector_1"));
+        helper.add(Materials.get("daylight_detector_2"));
+        helper.add(Materials.get("repeater_on"));
+        helper.add(Materials.get("repeater_off"));
+        helper.add(Materials.get("comparator_on"));
+        helper.add(Materials.get("comparator_off"));
+        helper.add(Materials.get("enchanting_table"));
 
         for (Material m : materials) {
             if (!isSolid(m)
@@ -1204,10 +1186,10 @@ public class BlockUtils {
         builder.clear();
         helper.clear();
 
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_9)) {
-            if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_15)) {
-                if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_16)) {
-                    if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_17)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_9)) {
+            if (Versions.isOrGreater(Versions.MCVersion.V1_15)) {
+                if (Versions.isOrGreater(Versions.MCVersion.V1_16)) {
+                    if (Versions.isOrGreater(Versions.MCVersion.V1_17)) {
                         helper.add(Material.LIGHTNING_ROD);
                     }
                     //helper.add(Material.CHAIN);
@@ -1243,7 +1225,7 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_14)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_14)) {
             builder.add(Material.SWEET_BERRY_BUSH);
         }
 
@@ -1252,7 +1234,7 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_15)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_15)) {
             builder.add(Material.HONEY_BLOCK);
         }
 
@@ -1261,7 +1243,7 @@ public class BlockUtils {
         // Separator
 
         builder.clear();
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_8)) {
+        if (Versions.isOrGreater(Versions.MCVersion.V1_8)) {
             builder.add(Material.SLIME_BLOCK);
         }
 
@@ -1274,11 +1256,11 @@ public class BlockUtils {
     }
 
     public static int getMaxHeight(World world) {
-        return MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_17) ? world.getMaxHeight() : 256;
+        return Versions.isOrGreater(Versions.MCVersion.V1_17) ? world.getMaxHeight() : 256;
     }
 
     public static int getMinHeight(World world) {
-        return MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_17) ? world.getMinHeight() : 0;
+        return Versions.isOrGreater(Versions.MCVersion.V1_17) ? world.getMinHeight() : 0;
     }
 
     public static boolean areCandles(Material m) {
@@ -1305,11 +1287,6 @@ public class BlockUtils {
         return pot.contains(m);
     }
 
-    public static boolean isLiquid(Block block) {
-        return isLiquid(new ServerBlock(block).getType())
-                || ChunksEvent.isLoaded(block) && block.isLiquid();
-    }
-
     public static boolean isLiquid(Material m) {
         return liquid.contains(m);
     }
@@ -1319,17 +1296,12 @@ public class BlockUtils {
                 && ((Waterlogged) blockData).isWaterlogged();
     }
 
-    public static boolean isLiquidOrWaterLogged(Block block, boolean lava) {
-        return (isLiquid(block) || new ServerBlock(block).isWaterLogged())
-                && (lava || new ServerBlock(block).getType() != MaterialUtils.get("lava"));
-    }
-
     public static boolean isLiquidOrWaterLogged(BlockData blockData, boolean lava) {
         return (blockDataExists
                 && blockData instanceof Waterlogged
                 && ((Waterlogged) blockData).isWaterlogged()
                 || isLiquid(blockData.getMaterial()))
-                && (lava || blockData.getMaterial() != MaterialUtils.get("lava"));
+                && (lava || blockData.getMaterial() != Materials.get("lava"));
     }
 
     public static boolean areStairs(Material m) {
@@ -1483,7 +1455,7 @@ public class BlockUtils {
     public static boolean areBouncingBlocks(Material material) {
         return honey_block.contains(material)
                 || slime_block.contains(material)
-                || MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_12) && bed.contains(material);
+                || Versions.isOrGreater(Versions.MCVersion.V1_12) && bed.contains(material);
     }
 
     public static boolean areInteractiveBushes(Material m) {
@@ -1502,13 +1474,6 @@ public class BlockUtils {
         return time >= 0L && time <= sensitiveBlockBreakTime || sensitive.contains(m);
     }
 
-    public static boolean isSensitive(PlayerProtocol p, Material m) {
-        return isSensitive(
-                m,
-                p == null ? -1 : MaterialUtils.getBlockBreakTime(p, p.getItemInHand(), m)
-        );
-    }
-
     public static boolean isSolid(Material m) {
         return solid.contains(m) || semi_solid.contains(m) || m.isSolid();
     }
@@ -1521,7 +1486,7 @@ public class BlockUtils {
         return semi_solid.contains(m);
     }
 
-    public static boolean isInteractiveAndPassable(PlayerProtocol p, Material material) {
+    public static boolean isInteractiveAndPassable(Player p, Material material) {
         return interactive_and_passable.contains(material)
                 || p != null && p.isFrozen();
     }
@@ -1531,130 +1496,4 @@ public class BlockUtils {
     public static boolean hasMaterial(ItemStack itemStack) {
         return itemStack != null && itemStack.getType() != Material.AIR;
     }
-
-    public static String environmentToString(World.Environment e) {
-        return toString(e);
-    }
-
-    public static String blockToString(Block b) {
-        return blockToString(new ServerBlock(b));
-    }
-
-    public static String blockToString(ServerBlock b) {
-        return toString(b.getType().toString());
-    }
-
-    public static String materialToString(Material m) {
-        return toString(m);
-    }
-
-    private static String toString(Object obj) {
-        return obj.toString().toLowerCase().replace("_", "-");
-    }
-
-    // Separator
-
-    public static boolean isSlime(PlayerProtocol p, ServerLocation loc, int blocks) {
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_8)) {
-            if (p.isOnGround()) {
-                return loc.getBlock().getType() == Material.SLIME_BLOCK;
-            } else {
-                ServerLocation loopLocation = loc.clone();
-
-                if (!isSolid(loopLocation.getBlock().getType())) {
-                    int y = loc.getBlockY();
-
-                    for (int i = y; i > Math.max(getMinHeight(loopLocation.getWorld()), y - blocks); i--) {
-                        Material m = loopLocation.add(0, -1, 0).getBlock().getType();
-
-                        if (m == Material.SLIME_BLOCK) {
-                            return true;
-                        } else if (isSolid(m)
-                                && m != Material.SNOW
-                                && !areCarpets(m)
-                                && !areSlabs(m)
-                                && !areStairs(m)
-                                && !areWalls(m)
-                                && !canClimb(m, false)) {
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    public static boolean isBed(PlayerProtocol p, ServerLocation loc, int blocks) {
-        if (MultiVersion.isOrGreater(MultiVersion.MCVersion.V1_12)) {
-            if (p.isOnGround()) {
-                return areBeds(loc.getBlock().getType());
-            } else {
-                ServerLocation loopLocation = loc.clone();
-
-                if (!isSolid(loopLocation.getBlock().getType())) {
-                    int y = loc.getBlockY();
-
-                    for (int i = y; i > Math.max(getMinHeight(loopLocation.getWorld()), y - blocks); i--) {
-                        Material m = loopLocation.add(0, -1, 0).getBlock().getType();
-
-                        if (areBeds(m)) {
-                            return true;
-                        } else if (isSolid(m)) {
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    public static boolean isBouncingBlock(PlayerProtocol p, ServerLocation loc, int blocks) {
-        return isSlime(p, loc, blocks) || isBed(p, loc, blocks);
-    }
-
-    // Separator
-
-    public static float getSlipperiness(ServerBlock block) {
-        if (areSlimeBlocks(block.getType())) {
-            return 0.8F;
-        } else if (areRegularIceBlocks(block.getType())) {
-            return 0.98F;
-        } else if (areBlueIceBlocks(block.getType())) {
-            return 0.989F;
-        } else {
-            return 0.6F;
-        }
-    }
-
-    public static boolean isSurroundedByAir(Location loc) {
-        World world = loc.getWorld();
-        int x = loc.getBlockX();
-        int y = loc.getBlockY();
-        int z = loc.getBlockZ();
-        for (int[] d : DIRS) {
-            ServerBlock relative = new ServerBlock(world.getBlockAt(x + d[0], y + d[1], z + d[2]));
-
-            if (relative.getType() != Material.AIR) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public static boolean isSurroundedByAir(PlayerProtocol protocol, Location loc) {
-        World world = loc.getWorld();
-        int x = loc.getBlockX();
-        int y = loc.getBlockY();
-        int z = loc.getBlockZ();
-
-        for (int[] d : DIRS) {
-            if (new ServerLocation(world, x + d[0], y + d[1], z + d[2]).getBlock(protocol).getType() != Material.AIR) {
-                return false;
-            }
-        }
-        return true;
-    }
-
 }

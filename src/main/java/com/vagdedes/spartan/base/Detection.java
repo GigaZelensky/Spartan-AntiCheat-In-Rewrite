@@ -1,15 +1,9 @@
 package com.vagdedes.spartan.base;
 
 import com.vagdedes.spartan.Register;
-import com.vagdedes.spartan.api.CheckPunishmentToggleEvent;
-import com.vagdedes.spartan.api.CheckSilentToggleEvent;
-import com.vagdedes.spartan.api.CheckToggleEvent;
-import com.vagdedes.spartan.api.ToggleAction;
-import com.vagdedes.spartan.functionality.Config;
-import com.vagdedes.spartan.functionality.tracking.ResearchEngine;
-import com.vagdedes.spartan.utils.AlgebraUtils;
-import com.vagdedes.spartan.utils.ConfigUtils;
-import lombok.Getter;
+import com.vagdedes.spartan.files.ConfigManagement;
+import com.vagdedes.spartan.math.AlgebraUtils;
+import com.vagdedes.spartan.files.ConfigSyntax;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -18,87 +12,41 @@ import java.io.File;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Check {
-
-    // Static
-
-    public enum DataType {
-        JAVA, BEDROCK;
-
-        private final String string;
-
-        DataType() {
-            switch (this.ordinal()) {
-                case 0:
-                    this.string = "Java";
-                    break;
-                default:
-                    this.string = "Bedrock";
-                    break;
-            }
-        }
-
-        @Override
-        public String toString() {
-            return string;
-        }
-    }
-
-    public enum DetectionType {
-        BUKKIT, PACKETS;
-
-        private final String string;
-
-        DetectionType() {
-            if (this.ordinal() == 0) {
-                this.string = "Bukkit";
-            } else {
-                this.string = "Packets";
-            }
-        }
-
-        @Override
-        public String toString() {
-            return string;
-        }
-    }
+public abstract class Detection {
 
     private static boolean panic = false;
     public static final int maxCommands = 10;
     private static final File
             file = new File(
-            Register.plugin.getDataFolder() + "/checks.yml"
-    ),
-            advancedFile = new File(
-                    Register.plugin.getDataFolder() + "/advanced.yml"
-            );
+            Register.plugin.getDataFolder() + "/detections.yml"
+    );
 
-    private static final List<String> defaultPunishments = new ArrayList<>(Check.maxCommands);
+    private static final List<String> defaultPunishments = new ArrayList<>(Detection.maxCommands);
 
     public static void setPanic(boolean panic) {
-        Check.panic = panic;
-        Config.create();
+        Detection.panic = panic;
+        ConfigManagement.create();
     }
 
     public static boolean getPanic() {
-        return Check.panic;
+        return Detection.panic;
     }
 
     static {
-        defaultPunishments.add(Register.command + " kick {player} {detections}");
+        defaultPunishments.add(Register.command + " kick {player} {detection:name}");
 
-        for (int position = (defaultPunishments.size() + 1); position <= Check.maxCommands; position++) {
+        for (int position = (defaultPunishments.size() + 1); position <= Detection.maxCommands; position++) {
             defaultPunishments.add("");
         }
     }
 
     // Object
 
-    public final CheckEnums.CheckType hackType;
+    public final DetectionEnums.DetectionType hackType;
     private String name;
     private final Map<String, Object> options;
     public final boolean handleCancelledEvents;
-    private final boolean[] enabled, silent, punish, detectionDetails;
+    private final boolean enabled, silent, punish, detectionDetails;
     private final Set<String>
             disabledWorlds,
             silentWorlds;
@@ -117,13 +65,11 @@ public class Check {
 
     // Object Methods
 
-    public Check(CheckEnums.CheckType hackType) {
+    public Detection(String name) {
         this.options = new ConcurrentHashMap<>();
         this.hackType = hackType;
 
         // Separator
-
-        Object handleCancelledEvents = getOption("cancelled_event", false, false);
 
         String name = getOption("name", this.hackType.toString(), false).toString(),
                 worlds_config = getOption("disabled_worlds", "exampleDisabledWorld1, exampleDisabledWorld2", false).toString(),
@@ -135,7 +81,7 @@ public class Check {
         this.punish = new boolean[DataType.values().length];
         this.detectionDetails = new boolean[DataType.values().length];
 
-        for (Check.DataType dataType : DataType.values()) {
+        for (Detection.DataType dataType : DataType.values()) {
             Object optionValue = getOption(
                     "enabled." + dataType.toString().toLowerCase(),
                     true,
@@ -243,11 +189,11 @@ public class Check {
 
     // Separator
 
-    public boolean isEnabled(Check.DataType dataType, String world) {
+    public boolean isEnabled(Detection.DataType dataType, String world) {
         if (dataType == null) {
             boolean enabled = false;
 
-            for (Check.DataType type : DataType.values()) {
+            for (Detection.DataType type : DataType.values()) {
                 if (this.enabled[type.ordinal()]) {
                     enabled = true;
                     break;
@@ -263,17 +209,17 @@ public class Check {
                 || !disabledWorlds.contains(world.toLowerCase());
     }
 
-    public void setEnabled(Check.DataType dataType, boolean b) {
-        Check.DataType[] dataTypes;
+    public void setEnabled(Detection.DataType dataType, boolean b) {
+        Detection.DataType[] dataTypes;
 
         if (dataType == null) {
             dataTypes = DataType.values();
         } else {
             dataTypes = null;
 
-            for (Check.DataType type : DataType.values()) {
+            for (Detection.DataType type : DataType.values()) {
                 if (type == dataType) {
-                    dataTypes = new Check.DataType[]{dataType};
+                    dataTypes = new Detection.DataType[]{dataType};
                     break;
                 }
             }
@@ -282,10 +228,10 @@ public class Check {
                 return;
             }
         }
-        for (Check.DataType type : dataTypes) {
+        for (Detection.DataType type : dataTypes) {
             CheckToggleEvent event;
 
-            if (Config.settings.getBoolean("Important.enable_developer_api")) {
+            if (ConfigManagement.settings.getBoolean("Important.enable_developer_api")) {
                 event = new CheckToggleEvent(this.hackType, b ? ToggleAction.ENABLE : ToggleAction.DISABLE);
                 Bukkit.getPluginManager().callEvent(event);
             } else {
@@ -307,7 +253,7 @@ public class Check {
         if (name.length() > 32) {
             name = name.substring(0, 32);
         }
-        for (CheckEnums.CheckType hackType : CheckEnums.CheckType.values()) {
+        for (DetectionEnums.DetectionType hackType : DetectionEnums.DetectionType.values()) {
             if (!hackType.equals(this.hackType)
                     && (name.equalsIgnoreCase(hackType.toString()))
                     || name.equalsIgnoreCase(hackType.getCheck().getName())) {
@@ -352,7 +298,7 @@ public class Check {
         try {
             String key = this.hackType + "." + option;
             boolean isDefaultNull = def == null;
-            File file = cache ? advancedFile : Check.file;
+            File file = cache ? advancedFile : Detection.file;
             YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
 
             if (cache) {
@@ -450,9 +396,9 @@ public class Check {
 
     // Separator
 
-    public boolean isDetectionDetails(Check.DataType dataType) {
+    public boolean isDetectionDetails(Detection.DataType dataType) {
         if (dataType == null) {
-            for (Check.DataType type : DataType.values()) {
+            for (Detection.DataType type : DataType.values()) {
                 if (this.detectionDetails[type.ordinal()]) {
                     return true;
                 }
@@ -463,15 +409,15 @@ public class Check {
         }
     }
 
-    public void setDetectionDetails(Check.DataType dataType, boolean b) {
-        Check.DataType[] dataTypes;
+    public void setDetectionDetails(Detection.DataType dataType, boolean b) {
+        Detection.DataType[] dataTypes;
 
         if (dataType == null) {
             dataTypes = DataType.values();
         } else {
-            dataTypes = new Check.DataType[]{dataType};
+            dataTypes = new Detection.DataType[]{dataType};
         }
-        for (Check.DataType type : dataTypes) {
+        for (Detection.DataType type : dataTypes) {
             this.detectionDetails[type.ordinal()] = b;
             setOption("detection_details." + type.toString().toLowerCase(), b);
             options.clear();
@@ -480,12 +426,12 @@ public class Check {
 
     // Separator
 
-    public boolean canPunish(Check.DataType dataType) {
+    public boolean canPunish(Detection.DataType dataType) {
         if (panic) {
             return false;
         }
         if (dataType == null) {
-            for (Check.DataType type : DataType.values()) {
+            for (Detection.DataType type : DataType.values()) {
                 if (this.punish[type.ordinal()]) {
                     return true;
                 }
@@ -498,13 +444,13 @@ public class Check {
 
     // Separator
 
-    public boolean isSilent(Check.DataType dataType, String world) {
+    public boolean isSilent(Detection.DataType dataType, String world) {
         if (panic
                 || world != null && silentWorlds.contains(world.toLowerCase())) {
             return true;
         }
         if (dataType == null) {
-            for (Check.DataType type : DataType.values()) {
+            for (Detection.DataType type : DataType.values()) {
                 if (this.silent[type.ordinal()]) {
                     return true;
                 }
@@ -513,17 +459,17 @@ public class Check {
         } else return this.silent[dataType.ordinal()];
     }
 
-    public void setSilent(Check.DataType dataType, boolean b) {
-        Check.DataType[] dataTypes;
+    public void setSilent(Detection.DataType dataType, boolean b) {
+        Detection.DataType[] dataTypes;
 
         if (dataType == null) {
             dataTypes = DataType.values();
         } else {
             dataTypes = null;
 
-            for (Check.DataType type : DataType.values()) {
+            for (Detection.DataType type : DataType.values()) {
                 if (type == dataType) {
-                    dataTypes = new Check.DataType[]{dataType};
+                    dataTypes = new Detection.DataType[]{dataType};
                     break;
                 }
             }
@@ -532,10 +478,10 @@ public class Check {
                 return;
             }
         }
-        for (Check.DataType type : dataTypes) {
+        for (Detection.DataType type : dataTypes) {
             CheckSilentToggleEvent event;
 
-            if (Config.settings.getBoolean("Important.enable_developer_api")) {
+            if (ConfigManagement.settings.getBoolean("Important.enable_developer_api")) {
                 event = new CheckSilentToggleEvent(this.hackType, b ? ToggleAction.ENABLE : ToggleAction.DISABLE);
                 Bukkit.getPluginManager().callEvent(event);
             } else {
@@ -560,7 +506,7 @@ public class Check {
 
         if (!configuration.contains(sectionString)) {
             for (int position = 0; position < defaultPunishments.size(); position++) {
-                ConfigUtils.add(file, sectionString + "." + (position + 1), defaultPunishments.get(position));
+                ConfigManagement.add(file, sectionString + "." + (position + 1), defaultPunishments.get(position));
             }
         }
         ConfigurationSection section = configuration.getConfigurationSection(sectionString);
@@ -576,7 +522,7 @@ public class Check {
                     if (AlgebraUtils.validInteger(key)) {
                         int number = Integer.parseInt(key);
 
-                        if (number >= 1 && number <= Check.maxCommands) {
+                        if (number >= 1 && number <= Detection.maxCommands) {
                             String command = configuration.getString(sectionString + number);
 
                             if (command != null && !command.isEmpty()) {
@@ -593,7 +539,7 @@ public class Check {
     }
 
     public void setPunishmentCommand(int position, String command) {
-        if (position < 1 || position > Check.maxCommands) {
+        if (position < 1 || position > Detection.maxCommands) {
             return;
         }
         if (command == null) {
@@ -612,18 +558,18 @@ public class Check {
         }
     }
 
-    public void setPunish(Check.DataType dataType, boolean b) {
-        Check.DataType[] dataTypes;
+    public void setPunish(Detection.DataType dataType, boolean b) {
+        Detection.DataType[] dataTypes;
 
         if (dataType == null) {
             dataTypes = DataType.values();
         } else {
-            dataTypes = new Check.DataType[]{dataType};
+            dataTypes = new Detection.DataType[]{dataType};
         }
-        for (Check.DataType type : dataTypes) {
+        for (Detection.DataType type : dataTypes) {
             CheckPunishmentToggleEvent event;
 
-            if (Config.settings.getBoolean("Important.enable_developer_api")) {
+            if (ConfigManagement.settings.getBoolean("Important.enable_developer_api")) {
                 event = new CheckPunishmentToggleEvent(this.hackType, b ? ToggleAction.ENABLE : ToggleAction.DISABLE);
                 Bukkit.getPluginManager().callEvent(event);
             } else {

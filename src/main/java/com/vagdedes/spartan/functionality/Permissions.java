@@ -1,10 +1,10 @@
 package com.vagdedes.spartan.functionality;
 
 import com.vagdedes.spartan.Register;
-import com.vagdedes.spartan.base.CheckEnums;
 import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
 import com.vagdedes.spartan.api.Permission;
 import ai.idealistic.spartan.compatibility.necessary.protocollib.ProtocolLib;
+import com.vagdedes.spartan.files.ConfigManagement;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -51,9 +51,9 @@ public class Permissions {
 
     // Separator
 
-    public static boolean isBypassing(Player p, CheckEnums.CheckType hackType) {
+    public static boolean isBypassing(Player p, DetectionEnums.DetectionType hackType) {
         if (p.isOp()) {
-            return Config.settings.getBoolean("Important.op_bypass");
+            return ConfigManagement.settings.getBoolean("Important.op_bypass");
         } else {
             String key = Permission.BYPASS.getKey();
 

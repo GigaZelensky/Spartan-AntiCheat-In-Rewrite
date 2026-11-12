@@ -1,9 +1,8 @@
-package com.vagdedes.spartan.configuration;
+package com.vagdedes.spartan.files;
 
 import com.vagdedes.spartan.Register;
-import com.vagdedes.spartan.utils.ConfigurationBuilder;
 
-public class Messages extends ConfigurationBuilder {
+public class Messages extends ConfigBuilder {
 
     public Messages() {
         super("messages");
@@ -40,7 +39,6 @@ public class Messages extends ConfigurationBuilder {
         addOption("check_punishment_enable_message", "&8[&2" + prefix + "&8] &aYou enabled punishments for the check&8:&7 {detection}");
         addOption("check_punishment_disable_message", "&8[&2" + prefix + "&8] &cYou disabled punishments for the check&8:&7 {detection}");
         addOption("non_existing_check", "&8[&2" + prefix + "&8] &cThis check doesn't exist.");
-        addOption("bypass_message", "&8[&2" + prefix + "&8] &c{player} &7is now bypassing the &4{detection} &7check for &e{time} &7seconds.");
 
         // Notifications
         addOption("verbose_enabled", "&8[&2" + prefix + "&8] &aYou enabled verbose.");
@@ -51,8 +49,6 @@ public class Messages extends ConfigurationBuilder {
         // Commands
         addOption("unknown_command", "&fUnknown command. Please type \"/help\" for help.");
         addOption("failed_command", "&8[&2" + prefix + "&8]&c Command failed ({command}). Please check your arguments and try again.");
-        addOption("successful_command", "&8[&2" + prefix + "&8]&a Command successful.");
-        addOption("massive_command_reason", "&8[&2" + prefix + "&8]&c The length of the reason is too big.");
     }
 
     @Override

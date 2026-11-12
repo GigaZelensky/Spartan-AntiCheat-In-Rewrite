@@ -2,6 +2,7 @@ package com.vagdedes.spartan.functionality;
 
 import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
 import com.vagdedes.spartan.api.Permission;
+import com.vagdedes.spartan.files.ConfigManagement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +58,7 @@ public class DetectionNotifications {
 
         if (verbose.containsKey(uuid)) {
             verbose.remove(uuid);
-            p.bukkit().sendMessage(Config.messages.getColorfulString("verbose_disable"));
+            p.bukkit().sendMessage(ConfigManagement.messages.getColorfulString("verbose_disable"));
         }
     }
 
@@ -65,12 +66,12 @@ public class DetectionNotifications {
         Integer frequency = notifications.put(p.getUUID(), i);
 
         if (frequency == null) {
-            p.bukkit().sendMessage(Config.messages.getColorfulString("notifications_enable"));
+            p.bukkit().sendMessage(ConfigManagement.messages.getColorfulString("notifications_enable"));
         } else if (frequency != i) {
-            p.bukkit().sendMessage(Config.messages.getColorfulString("notifications_modified"));
+            p.bukkit().sendMessage(ConfigManagement.messages.getColorfulString("notifications_modified"));
         } else {
             notifications.remove(p.getUUID());
-            p.bukkit().sendMessage(Config.messages.getColorfulString("notifications_disable"));
+            p.bukkit().sendMessage(ConfigManagement.messages.getColorfulString("notifications_disable"));
         }
     }
 
@@ -79,7 +80,7 @@ public class DetectionNotifications {
 
         if (!verbose.containsKey(uuid)) {
             verbose.put(uuid, true);
-            p.bukkit().sendMessage(Config.messages.getColorfulString("verbose_enable"));
+            p.bukkit().sendMessage(ConfigManagement.messages.getColorfulString("verbose_enable"));
         }
     }
 

@@ -1,8 +1,8 @@
-package com.vagdedes.spartan.functionality;
+package com.vagdedes.spartan.support;
 
 import org.bukkit.Bukkit;
 
-public class MultiVersion {
+public class Versions {
 
     public static final MCVersion serverVersion;
     public static final boolean folia;
@@ -11,6 +11,14 @@ public class MultiVersion {
         serverVersion = judge();
         folia = folia();
     }
+
+    public static final boolean
+            slowFall = Versions.isOrGreater(Versions.MCVersion.V1_13),
+            dolphinsGrace = Versions.isOrGreater(Versions.MCVersion.V1_13),
+            soulSpeed = Versions.isOrGreater(Versions.MCVersion.V1_16),
+            levitation = Versions.isOrGreater(Versions.MCVersion.V1_9),
+            elytra = Versions.isOrGreater(Versions.MCVersion.V1_9),
+            trident = Versions.isOrGreater(Versions.MCVersion.V1_13);
 
     public enum MCVersion {
         V1_7(5),

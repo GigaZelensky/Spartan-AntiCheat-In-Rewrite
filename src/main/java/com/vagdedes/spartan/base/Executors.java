@@ -1,18 +1,18 @@
-package com.vagdedes.spartan.functionality;
+package com.vagdedes.spartan.base;
 
 import com.vagdedes.spartan.Register;
-import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
-import com.vagdedes.spartan.abstraction.world.ServerLocation;
+import com.vagdedes.spartan.support.Versions;
 import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 
-class ServerSchedulers {
+class Executors {
 
     static void transfer(Runnable runnable) {
         if (Register.isPluginEnabled()) {
-            if (!MultiVersion.folia) {
+            if (!Versions.folia) {
                 Bukkit.getScheduler().runTask(Register.plugin, runnable);
             } else {
                 Bukkit.getGlobalRegionScheduler().run(Register.plugin, consumer -> runnable.run());
@@ -20,8 +20,8 @@ class ServerSchedulers {
         }
     }
 
-    static void run(PlayerProtocol protocol, Runnable runnable, boolean sync) {
-        if (!MultiVersion.folia) {
+    static void run(Player protocol, Runnable runnable, boolean sync) {
+        if (!Versions.folia) {
             if (sync && !Bukkit.isPrimaryThread()) {
                 if (Register.isPluginEnabled()) {
                     Bukkit.getScheduler().runTask(Register.plugin, runnable);
@@ -38,8 +38,8 @@ class ServerSchedulers {
                         Bukkit.getRegionScheduler()
                                 .execute(Register.plugin,
                                         location.getWorld(),
-                                        ServerLocation.getChunkPos(location.getBlockX()),
-                                        ServerLocation.getChunkPos(location.getBlockZ()),
+                                        location.getBlockX() << 4,
+                                        location.getBlockZ() << 4,
                                         runnable);
                     }
                 }
@@ -54,7 +54,7 @@ class ServerSchedulers {
     }
 
     static void run(World world, int x, int z, Runnable runnable, boolean sync) {
-        if (!MultiVersion.folia) {
+        if (!Versions.folia) {
             if (sync && !Bukkit.isPrimaryThread()) {
                 if (Register.isPluginEnabled()) {
                     Bukkit.getScheduler().runTask(Register.plugin, runnable);
@@ -70,9 +70,9 @@ class ServerSchedulers {
         }
     }
 
-    static Object schedule(PlayerProtocol protocol, Runnable runnable, long start, long repetition) {
+    static Object schedule(Player protocol, Runnable runnable, long start, long repetition) {
         if (Register.isPluginEnabled()) {
-            if (!MultiVersion.folia) {
+            if (!Versions.folia) {
                 if (repetition == -1L) {
                     return Bukkit.getScheduler()
                             .scheduleSyncDelayedTask(Register.plugin, runnable, start);
@@ -89,8 +89,8 @@ class ServerSchedulers {
                             return Bukkit.getRegionScheduler()
                                     .runDelayed(Register.plugin,
                                             location.getWorld(),
-                                            ServerLocation.getChunkPos(location.getBlockX()),
-                                            ServerLocation.getChunkPos(location.getBlockZ()),
+                                            location.getBlockX() << 4,
+                                            location.getBlockZ() << 4,
                                             consumer -> runnable.run(), start);
                         } else {
                             return null;
@@ -107,8 +107,8 @@ class ServerSchedulers {
                             return Bukkit.getRegionScheduler()
                                     .runAtFixedRate(Register.plugin,
                                             location.getWorld(),
-                                            ServerLocation.getChunkPos(location.getBlockX()),
-                                            ServerLocation.getChunkPos(location.getBlockZ()),
+                                            location.getBlockX() << 4,
+                                            location.getBlockZ() << 4,
                                             consumer -> runnable.run(), start, repetition);
                         } else {
                             return null;
@@ -125,7 +125,7 @@ class ServerSchedulers {
     }
 
     static void cancel(Object task) {
-        if (!MultiVersion.folia) {
+        if (!Versions.folia) {
             if (task instanceof Integer) {
                 Bukkit.getScheduler().cancelTask((int) task);
             }
