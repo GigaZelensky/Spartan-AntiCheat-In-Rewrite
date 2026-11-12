@@ -3,7 +3,6 @@ package com.vagdedes.spartan.base;
 import com.vagdedes.spartan.Register;
 import com.vagdedes.spartan.files.ConfigManagement;
 import com.vagdedes.spartan.math.AlgebraUtils;
-import com.vagdedes.spartan.files.ConfigSyntax;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -12,7 +11,7 @@ import java.io.File;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public abstract class Detection {
+public class Detection {
 
     private static boolean panic = false;
     public static final int maxCommands = 10;
@@ -42,11 +41,11 @@ public abstract class Detection {
 
     // Object
 
-    public final DetectionEnums.DetectionType hackType;
+    public final String realName;
     private String name;
     private final Map<String, Object> options;
     public final boolean handleCancelledEvents;
-    private final boolean enabled, silent, punish, detectionDetails;
+    private final boolean enabled, punish, detectionDetails;
     private final Set<String>
             disabledWorlds,
             silentWorlds;
@@ -67,58 +66,35 @@ public abstract class Detection {
 
     public Detection(String name) {
         this.options = new ConcurrentHashMap<>();
-        this.hackType = hackType;
+        this.realName = name;
 
         // Separator
 
-        String name = getOption("name", this.hackType.toString(), false).toString(),
-                worlds_config = getOption("disabled_worlds", "exampleDisabledWorld1, exampleDisabledWorld2", false).toString(),
+        this.name = getOption("name", name, false).toString();
+        String worlds_config = getOption("disabled_worlds", "exampleDisabledWorld1, exampleDisabledWorld2", false).toString(),
                 silents_config = getOption("silent_worlds", "exampleSilentWorld1, exampleSilentWorld2", false).toString();
 
         // Separator
-        this.enabled = new boolean[DataType.values().length];
-        this.silent = new boolean[DataType.values().length];
-        this.punish = new boolean[DataType.values().length];
+        this.enabled = getOption(
+                "enabled",
+                true,
+                false
+        ) == Boolean.TRUE;
+        this.punish = getOption(
+                "punish",
+                true,
+                false
+        ) == Boolean.TRUE;
         this.detectionDetails = new boolean[DataType.values().length];
-
-        for (Detection.DataType dataType : DataType.values()) {
-            Object optionValue = getOption(
-                    "enabled." + dataType.toString().toLowerCase(),
-                    true,
-                    false
-            );
-            boolean enabled = toBoolean(optionValue);
-            this.enabled[dataType.ordinal()] = enabled;
-            optionValue = getOption(
-                    "silent." + dataType.toString().toLowerCase(),
-                    false,
-                    false
-            );
-            this.silent[dataType.ordinal()] = toBoolean(optionValue);
-            optionValue = getOption(
-                    "punishments.enabled." + dataType.toString().toLowerCase(),
-                    true,
-                    false
-            );
-            this.punish[dataType.ordinal()] = toBoolean(optionValue);
-
-            optionValue = getOption(
-                    "detection_details." + dataType.toString().toLowerCase(),
-                    true,
-                    false
-            );
-            this.detectionDetails[dataType.ordinal()] = toBoolean(optionValue);
-        }
 
         // Separator
 
-        if (name != null) {
-            if (name.length() > 32) {
-                name = name.substring(0, 32);
+        if (this.name != null) {
+            if (this.name.length() > 32) {
+                this.name = this.name.substring(0, 32);
             }
-            this.name = name;
         } else {
-            this.name = hackType.toString();
+            this.name = name;
         }
 
         // Separator
@@ -189,27 +165,19 @@ public abstract class Detection {
 
     // Separator
 
-    public boolean isEnabled(Detection.DataType dataType, String world) {
-        if (dataType == null) {
-            boolean enabled = false;
-
-            for (Detection.DataType type : DataType.values()) {
-                if (this.enabled[type.ordinal()]) {
-                    enabled = true;
-                    break;
-                }
-            }
-            if (!enabled) {
-                return false;
-            }
-        } else if (!this.enabled[dataType.ordinal()]) {
-            return false;
-        }
-        return world == null
-                || !disabledWorlds.contains(world.toLowerCase());
+    public String getName() {
+        return name;
     }
 
-    public void setEnabled(Detection.DataType dataType, boolean b) {
+    // Separator
+
+    public boolean isEnabled(String world) {
+        return this.enabled
+                && (world == null
+                || !disabledWorlds.contains(world.toLowerCase()));
+    }
+
+    public void setEnabled(boolean b) {
         Detection.DataType[] dataTypes;
 
         if (dataType == null) {
@@ -342,58 +310,6 @@ public abstract class Detection {
         return def;
     }
 
-    public boolean getBooleanOption(String option, Boolean def) {
-        Object object = getOption(option, def, true);
-        return object instanceof Boolean ? (boolean) object :
-                object instanceof String ? Boolean.parseBoolean(object.toString().toLowerCase()) :
-                        object instanceof Number ? ((Number) object).doubleValue() > 0.0 :
-                                def != null && def;
-    }
-
-    public int getNumericalOption(String option, int def) {
-        Object object = getOption(option, def, true);
-
-        if (object instanceof Integer || object instanceof Short) {
-            return ((Number) object).intValue();
-        } else if (object instanceof String || object instanceof Long) {
-            try {
-                return Integer.parseInt(object.toString());
-            } catch (Exception ex) {
-                return def;
-            }
-        } else if (object instanceof Double || object instanceof Float) {
-            try {
-                return AlgebraUtils.integerRound(Double.parseDouble(object.toString()));
-            } catch (Exception ex) {
-                return def;
-            }
-        } else {
-            return def;
-        }
-    }
-
-    public double getDecimalOption(String option, double def) {
-        Object object = getOption(option, def, true);
-
-        if (object instanceof Double || object instanceof Float) {
-            return ((Number) object).doubleValue();
-        } else if (object instanceof Long) {
-            return ((Long) object).doubleValue();
-        } else if (object instanceof Integer) {
-            return ((Integer) object).doubleValue();
-        } else if (object instanceof Short) {
-            return ((Short) object).doubleValue();
-        } else if (object instanceof String) {
-            try {
-                return Double.parseDouble(object.toString());
-            } catch (Exception ex) {
-                return def;
-            }
-        } else {
-            return def;
-        }
-    }
-
     // Separator
 
     public boolean isDetectionDetails(Detection.DataType dataType) {
@@ -426,20 +342,8 @@ public abstract class Detection {
 
     // Separator
 
-    public boolean canPunish(Detection.DataType dataType) {
-        if (panic) {
-            return false;
-        }
-        if (dataType == null) {
-            for (Detection.DataType type : DataType.values()) {
-                if (this.punish[type.ordinal()]) {
-                    return true;
-                }
-            }
-            return false;
-        } else {
-            return this.punish[dataType.ordinal()];
-        }
+    public boolean canPunish() {
+        return !panic && this.punish;
     }
 
     // Separator
@@ -535,26 +439,6 @@ public abstract class Detection {
             this.punishments = list;
         } else {
             this.punishments = new ArrayList<>(0);
-        }
-    }
-
-    public void setPunishmentCommand(int position, String command) {
-        if (position < 1 || position > Detection.maxCommands) {
-            return;
-        }
-        if (command == null) {
-            command = "";
-        }
-        String sectionString = this.hackType + ".punishments.commands." + position;
-        YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
-        configuration.set(sectionString, command);
-
-        try {
-            configuration.save(file);
-            calculatePunishmentCommands();
-        } catch (Exception ex) {
-            AwarenessNotifications.forcefullySend("Failed to store '" + sectionString + "' option in '" + file.getName() + "' file.");
-            ex.printStackTrace();
         }
     }
 

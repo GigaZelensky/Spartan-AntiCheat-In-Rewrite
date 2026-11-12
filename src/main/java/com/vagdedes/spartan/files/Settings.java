@@ -1,9 +1,5 @@
 package com.vagdedes.spartan.files;
 
-import com.vagdedes.spartan.functionality.DetectionNotifications;
-
-import java.util.Collection;
-
 public class Settings extends ConfigBuilder {
 
     public Settings() {

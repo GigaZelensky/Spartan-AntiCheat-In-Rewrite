@@ -1,10 +1,8 @@
 package com.vagdedes.spartan.commands;
 
-import com.vagdedes.spartan.abstraction.inventory.implementation.PlayerInfo;
-import com.vagdedes.spartan.abstraction.inventory.implementation.SynMenu;
 import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
 import com.vagdedes.spartan.api.Permission;
-import com.vagdedes.spartan.functionality.Permissions;
+import com.vagdedes.spartan.support.Permissions;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;

@@ -2,7 +2,8 @@ package com.vagdedes.spartan.support;
 
 import org.bukkit.Material;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Materials {
 

@@ -5,8 +5,6 @@ import com.vagdedes.spartan.math.java.ReflectionUtils;
 import org.bukkit.entity.Player;
 import org.geysermc.floodgate.api.FloodgateApi;
 
-import java.util.UUID;
-
 public class Floodgate {
 
     private static boolean classExists = false;

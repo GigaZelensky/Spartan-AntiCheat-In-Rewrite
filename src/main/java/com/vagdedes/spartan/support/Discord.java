@@ -1,4 +1,4 @@
-package com.vagdedes.spartan.functionality;
+package com.vagdedes.spartan.support;
 
 import com.vagdedes.spartan.Register;
 import com.vagdedes.spartan.files.ConfigManagement;
@@ -13,11 +13,11 @@ import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class DiscordWebhooks {
+public class Discord {
 
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    public static void execute(String webhook, UUID uuid, String name, int ping, int x, int y, int z, String type, String information) {
+    public static void executeWebhook(String webhook, UUID uuid, String name, int ping, int x, int y, int z, String type, String information) {
         String urlString = ConfigManagement.settings.getString("Discord." + webhook + "_webhook_url");
 
         if (urlString == null

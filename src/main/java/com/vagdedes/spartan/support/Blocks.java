@@ -12,9 +12,16 @@ import java.util.Set;
 
 public class Blocks {
 
-    public static boolean blockDataExists = ReflectionUtils.classExists(
-            "org.bukkit.block.data.BlockData"
-    );
+    public static boolean blockDataExists;
+
+    static {
+        try {
+            blockDataExists = Class.forName("org.bukkit.block.data.BlockData") != null;
+        } catch (ClassNotFoundException e) {
+            blockDataExists = false;
+        }
+    }
+
     public static final long sensitiveBlockBreakTime = 250L;
     public static final Material
             head = Materials.get("head"),
