@@ -12,8 +12,8 @@ import com.vagdedes.spartan.functionality.moderation.DetectionNotifications;
 import com.vagdedes.spartan.functionality.server.MultiVersion;
 import com.vagdedes.spartan.functionality.server.Permissions;
 import com.vagdedes.spartan.functionality.tracking.LimitedEdition;
-import com.vagdedes.spartan.utils.math.AlgebraUtils;
-import com.vagdedes.spartan.utils.minecraft.entity.PlayerUtils;
+import com.vagdedes.spartan.utils.AlgebraUtils;
+import com.vagdedes.spartan.utils.PlayerUtils;
 import org.bukkit.GameMode;
 import org.bukkit.event.Cancellable;
 

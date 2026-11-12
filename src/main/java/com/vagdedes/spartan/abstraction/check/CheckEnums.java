@@ -5,7 +5,7 @@ import ai.idealistic.spartan.abstraction.check.implementation.misc.InventoryClic
 import ai.idealistic.spartan.abstraction.check.implementation.movement.GravitySimulation;
 import ai.idealistic.spartan.abstraction.check.implementation.movement.SpeedSimulation;
 import ai.idealistic.spartan.abstraction.check.implementation.movement.exploits.Exploits;
-import com.vagdedes.spartan.utils.minecraft.inventory.MaterialUtils;
+import com.vagdedes.spartan.utils.MaterialUtils;
 import lombok.Getter;
 import org.bukkit.Material;
 

@@ -1,4 +1,4 @@
-package com.vagdedes.spartan.utils.minecraft.inventory;
+package com.vagdedes.spartan.utils;
 
 import org.bukkit.enchantments.Enchantment;
 

@@ -1,6 +1,6 @@
 package com.vagdedes.spartan.functionality.connection;
 
-import com.vagdedes.spartan.utils.math.AlgebraUtils;
+import com.vagdedes.spartan.utils.AlgebraUtils;
 
 import java.util.Objects;
 

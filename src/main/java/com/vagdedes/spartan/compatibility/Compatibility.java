@@ -15,7 +15,7 @@ import ai.idealistic.spartan.compatibility.necessary.protocollib.ProtocolLib;
 import com.vagdedes.spartan.functionality.moderation.AwarenessNotifications;
 import com.vagdedes.spartan.functionality.server.MultiVersion;
 import com.vagdedes.spartan.utils.java.ReflectionUtils;
-import com.vagdedes.spartan.utils.minecraft.server.ConfigUtils;
+import com.vagdedes.spartan.utils.ConfigUtils;
 import com.vagdedes.spartan.utils.minecraft.server.PluginUtils;
 import lombok.Getter;
 import lombok.Setter;

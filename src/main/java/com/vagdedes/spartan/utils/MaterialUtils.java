@@ -1,13 +1,10 @@
-package com.vagdedes.spartan.utils.minecraft.inventory;
+package com.vagdedes.spartan.utils;
 
 import com.vagdedes.spartan.abstraction.protocol.ExtendedPotionEffect;
 import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
 import com.vagdedes.spartan.abstraction.world.ServerBlock;
 import com.vagdedes.spartan.abstraction.world.ServerLocation;
 import com.vagdedes.spartan.functionality.server.MultiVersion;
-import com.vagdedes.spartan.utils.math.AlgebraUtils;
-import com.vagdedes.spartan.utils.minecraft.entity.PotionEffectUtils;
-import com.vagdedes.spartan.utils.minecraft.world.BlockUtils;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
