@@ -45,7 +45,7 @@ public class Detection {
     private String name;
     private final Map<String, Object> options;
     public final boolean handleCancelledEvents;
-    private final boolean enabled, punish, detectionDetails;
+    private boolean enabled, punish;
     private final Set<String>
             disabledWorlds,
             silentWorlds;
@@ -67,14 +67,7 @@ public class Detection {
     public Detection(String name) {
         this.options = new ConcurrentHashMap<>();
         this.realName = name;
-
-        // Separator
-
         this.name = getOption("name", name, false).toString();
-        String worlds_config = getOption("disabled_worlds", "exampleDisabledWorld1, exampleDisabledWorld2", false).toString(),
-                silents_config = getOption("silent_worlds", "exampleSilentWorld1, exampleSilentWorld2", false).toString();
-
-        // Separator
         this.enabled = getOption(
                 "enabled",
                 true,
@@ -85,7 +78,6 @@ public class Detection {
                 true,
                 false
         ) == Boolean.TRUE;
-        this.detectionDetails = new boolean[DataType.values().length];
 
         // Separator
 
@@ -96,8 +88,11 @@ public class Detection {
         } else {
             this.name = name;
         }
+        this.setName(this.name);
 
         // Separator
+        String worlds_config = getOption("disabled_worlds", "exampleDisabledWorld1, exampleDisabledWorld2", false).toString(),
+                silents_config = getOption("silent_worlds", "exampleSilentWorld1, exampleSilentWorld2", false).toString();
 
         this.handleCancelledEvents = handleCancelledEvents != null
                 && toBoolean(handleCancelledEvents);
@@ -177,59 +172,33 @@ public class Detection {
                 || !disabledWorlds.contains(world.toLowerCase()));
     }
 
-    public void setEnabled(boolean b) {
-        Detection.DataType[] dataTypes;
-
-        if (dataType == null) {
-            dataTypes = DataType.values();
+    public boolean setEnabled(boolean b) {
+        if (this.enabled != b) {
+            this.enabled = b;
+            setOption("enabled", b);
+            options.clear();
+            return true;
         } else {
-            dataTypes = null;
-
-            for (Detection.DataType type : DataType.values()) {
-                if (type == dataType) {
-                    dataTypes = new Detection.DataType[]{dataType};
-                    break;
-                }
-            }
-
-            if (dataTypes == null) {
-                return;
-            }
-        }
-        for (Detection.DataType type : dataTypes) {
-            CheckToggleEvent event;
-
-            if (ConfigManagement.settings.getBoolean("Important.enable_developer_api")) {
-                event = new CheckToggleEvent(this.hackType, b ? ToggleAction.ENABLE : ToggleAction.DISABLE);
-                Bukkit.getPluginManager().callEvent(event);
-            } else {
-                event = null;
-            }
-
-            if (event == null || !event.isCancelled()) {
-                this.enabled[type.ordinal()] = b;
-                ResearchEngine.queueToCache(this.hackType, type);
-                setOption("enabled." + type.toString().toLowerCase(), b);
-                options.clear();
-            }
+            return false;
         }
     }
 
     // Separator
 
-    public void setName(String name) {
+    public boolean setName(String name) {
         if (name.length() > 32) {
             name = name.substring(0, 32);
         }
-        for (DetectionEnums.DetectionType hackType : DetectionEnums.DetectionType.values()) {
-            if (!hackType.equals(this.hackType)
-                    && (name.equalsIgnoreCase(hackType.toString()))
-                    || name.equalsIgnoreCase(hackType.getCheck().getName())) {
-                return;
+        for (Detection detection : Detections.LIST) {
+            if (detection.getName().equalsIgnoreCase(this.name)
+                    || detection.realName.equalsIgnoreCase(this.name)) {
+                this.name = realName;
+                return false;
             }
         }
         this.name = name;
         setOption("name", name);
+        return true;
     }
 
     // Separator
@@ -312,36 +281,6 @@ public class Detection {
 
     // Separator
 
-    public boolean isDetectionDetails(Detection.DataType dataType) {
-        if (dataType == null) {
-            for (Detection.DataType type : DataType.values()) {
-                if (this.detectionDetails[type.ordinal()]) {
-                    return true;
-                }
-            }
-            return false;
-        } else {
-            return this.detectionDetails[dataType.ordinal()];
-        }
-    }
-
-    public void setDetectionDetails(Detection.DataType dataType, boolean b) {
-        Detection.DataType[] dataTypes;
-
-        if (dataType == null) {
-            dataTypes = DataType.values();
-        } else {
-            dataTypes = new Detection.DataType[]{dataType};
-        }
-        for (Detection.DataType type : dataTypes) {
-            this.detectionDetails[type.ordinal()] = b;
-            setOption("detection_details." + type.toString().toLowerCase(), b);
-            options.clear();
-        }
-    }
-
-    // Separator
-
     public boolean canPunish() {
         return !panic && this.punish;
     }
@@ -405,7 +344,7 @@ public class Detection {
     }
 
     private void calculatePunishmentCommands() {
-        String sectionString = hackType + ".punishments.commands";
+        String sectionString = realName + ".punishments.commands";
         YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
 
         if (!configuration.contains(sectionString)) {

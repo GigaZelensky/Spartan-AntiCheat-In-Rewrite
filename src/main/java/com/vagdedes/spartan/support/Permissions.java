@@ -16,7 +16,9 @@ public class Permissions {
             RELOAD = Register.command + ".reload",
             TOGGLE = Register.command + ".toggle",
             ENABLE = Register.command + ".enable",
-            DISABLE = Register.command + ".disable";
+            DISABLE = Register.command + ".disable",
+            PANIC = Register.command + ".panic",
+            PUNISH = Register.command + ".punish";
 
     public static final String[] keys = new String[]{
             KICK,
@@ -28,6 +30,8 @@ public class Permissions {
             TOGGLE,
             ENABLE,
             DISABLE,
+            PANIC,
+            PUNISH
     };
 
     public static boolean hasAny(Player p) {

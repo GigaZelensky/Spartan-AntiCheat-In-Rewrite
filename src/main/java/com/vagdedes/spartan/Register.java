@@ -1,7 +1,7 @@
 package com.vagdedes.spartan;
 
-import com.vagdedes.spartan.commands.CommandExecution;
-import com.vagdedes.spartan.commands.CommandTab;
+import com.vagdedes.spartan.support.Commands;
+import com.vagdedes.spartan.support.TabCompletion;
 import com.vagdedes.spartan.files.ConfigManagement;
 import com.vagdedes.spartan.math.AlgebraUtils;
 import com.vagdedes.spartan.support.Versions;
@@ -47,8 +47,8 @@ public class Register extends JavaPlugin {
         }
         ConfigManagement.create();
         //enable(new EventClass());
-        this.getCommand(command).setExecutor(new CommandExecution());
-        this.getCommand(command).setTabCompleter(new CommandTab());
+        this.getCommand(command).setExecutor(new Commands());
+        this.getCommand(command).setTabCompleter(new TabCompletion());
     }
 
     public void onDisable() {

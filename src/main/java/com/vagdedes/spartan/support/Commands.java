@@ -1,4 +1,4 @@
-package com.vagdedes.spartan.commands;
+package com.vagdedes.spartan.support;
 
 import com.vagdedes.spartan.Register;
 import org.bukkit.command.Command;
@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-public class CommandExecution implements CommandExecutor {
+public class Commands implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         boolean isPlayer = sender instanceof Player;

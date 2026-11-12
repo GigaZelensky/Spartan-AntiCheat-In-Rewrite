@@ -1,8 +1,6 @@
-package com.vagdedes.spartan.commands;
+package com.vagdedes.spartan.support;
 
-import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
-import com.vagdedes.spartan.api.Permission;
-import com.vagdedes.spartan.support.Permissions;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -10,7 +8,7 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 
-public class CommandTab implements TabCompleter {
+public class TabCompletion implements TabCompleter {
 
     private static final Map<String, String> commands = new LinkedHashMap<>(18); // Attention
 
@@ -57,21 +55,16 @@ public class CommandTab implements TabCompleter {
                 }
             }
         } else if (length > 1) {
-            Collection<PlayerProtocol> protocols = PluginBase.getProtocols();
+            String argAbstract = args[length - 1].toLowerCase();
+            boolean isPlayer = sender instanceof Player;
+            Player p = isPlayer ? (Player) sender : null;
 
-            if (!protocols.isEmpty()) {
-                String argAbstract = args[length - 1].toLowerCase();
-                boolean player = sender instanceof Player;
-                PlayerProtocol p = player ? PluginBase.getProtocol((Player) sender) : null;
-                player &= p != null;
+            for (Player online : Bukkit.getOnlinePlayers()) {
+                if (!isPlayer || p.canSee(online)) {
+                    String name = online.getName();
 
-                for (PlayerProtocol protocol : protocols) {
-                    if (!player || p.bukkit().canSee(protocol.bukkit())) {
-                        String name = protocol.bukkit().getName();
-
-                        if (name.toLowerCase().contains(argAbstract)) {
-                            list.add(name);
-                        }
+                    if (name.toLowerCase().contains(argAbstract)) {
+                        list.add(name);
                     }
                 }
             }
