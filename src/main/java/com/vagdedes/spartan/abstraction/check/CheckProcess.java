@@ -1,15 +1,15 @@
 package com.vagdedes.spartan.abstraction.check;
 
-import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
+import org.bukkit.entity.Player;
 
 public abstract class CheckProcess {
 
-    public final CheckEnums.HackType hackType;
-    public final PlayerProtocol protocol;
+    public final CheckEnums.CheckType checkType;
+    public final Player player;
 
-    protected CheckProcess(CheckEnums.HackType hackType, PlayerProtocol protocol) {
-        this.hackType = hackType;
-        this.protocol = protocol;
+    protected CheckProcess(CheckEnums.CheckType checkType, Player player) {
+        this.checkType = checkType;
+        this.player = player;
     }
 
 }

@@ -3,7 +3,6 @@ package com.vagdedes.spartan;
 import com.vagdedes.spartan.functionality.command.CommandExecution;
 import com.vagdedes.spartan.functionality.command.CommandTab;
 import com.vagdedes.spartan.functionality.connection.IDs;
-import com.vagdedes.spartan.functionality.moderation.AwarenessNotifications;
 import com.vagdedes.spartan.functionality.server.Config;
 import com.vagdedes.spartan.functionality.server.MultiVersion;
 import ai.idealistic.spartan.listeners.bukkit.*;

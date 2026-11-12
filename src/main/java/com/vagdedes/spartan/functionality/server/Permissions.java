@@ -51,7 +51,7 @@ public class Permissions {
 
     // Separator
 
-    public static boolean isBypassing(Player p, CheckEnums.HackType hackType) {
+    public static boolean isBypassing(Player p, CheckEnums.CheckType hackType) {
         if (p.isOp()) {
             return Config.settings.getBoolean("Important.op_bypass");
         } else {

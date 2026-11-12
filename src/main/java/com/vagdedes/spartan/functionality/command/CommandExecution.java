@@ -5,9 +5,7 @@ import com.vagdedes.spartan.abstraction.check.Check;
 import com.vagdedes.spartan.abstraction.check.CheckEnums;
 import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
 import com.vagdedes.spartan.api.Permission;
-import com.vagdedes.spartan.functionality.connection.DiscordServer;
 import com.vagdedes.spartan.functionality.moderation.DetectionNotifications;
-import com.vagdedes.spartan.functionality.moderation.Wave;
 import com.vagdedes.spartan.functionality.moderation.clickable.ClickableMessage;
 import com.vagdedes.spartan.functionality.server.Config;
 import com.vagdedes.spartan.functionality.server.Permissions;
@@ -371,7 +369,10 @@ public class CommandExecution implements CommandExecutor {
                         );
                         return true;
                     }
-                    Config.reload(sender);
+                    Config.create();
+                    sender.sendMessage(
+                            Config.messages.getColorfulString("config_reload")
+                    );
 
                 } else if (isPlayer && args[0].equalsIgnoreCase("Info")) {
                     if (!Permissions.has(protocol.bukkit(), Permission.INFO)) {
@@ -536,7 +537,7 @@ public class CommandExecution implements CommandExecutor {
                             }
                             boolean exists = false;
 
-                            for (CheckEnums.HackType hackType : CheckEnums.HackType.values()) {
+                            for (CheckEnums.CheckType hackType : CheckEnums.CheckType.values()) {
                                 if (hackType.getCheck().getName().equalsIgnoreCase(check)) {
                                     check = hackType.toString();
                                     exists = true;
@@ -544,7 +545,7 @@ public class CommandExecution implements CommandExecutor {
                                 }
                             }
                             if (exists) {
-                                CheckEnums.HackType type = CheckEnums.HackType.valueOf(check);
+                                CheckEnums.CheckType type = CheckEnums.CheckType.valueOf(check);
                                 Check checkObj = type.getCheck();
 
                                 if (checkObj.isEnabled(null, null)) {
@@ -584,7 +585,7 @@ public class CommandExecution implements CommandExecutor {
                             }
                             boolean exists = false;
 
-                            for (CheckEnums.HackType hackType : CheckEnums.HackType.values()) {
+                            for (CheckEnums.CheckType hackType : CheckEnums.CheckType.values()) {
                                 if (hackType.getCheck().getName().equalsIgnoreCase(check)) {
                                     check = hackType.toString();
                                     exists = true;
@@ -592,7 +593,7 @@ public class CommandExecution implements CommandExecutor {
                                 }
                             }
                             if (exists) {
-                                CheckEnums.HackType type = CheckEnums.HackType.valueOf(check);
+                                CheckEnums.CheckType type = CheckEnums.CheckType.valueOf(check);
                                 Check checkObj = type.getCheck();
 
                                 if (checkObj.isSilent(null, null)) {
@@ -632,7 +633,7 @@ public class CommandExecution implements CommandExecutor {
                             }
                             boolean exists = false;
 
-                            for (CheckEnums.HackType hackType : CheckEnums.HackType.values()) {
+                            for (CheckEnums.CheckType hackType : CheckEnums.CheckType.values()) {
                                 if (hackType.getCheck().getName().equalsIgnoreCase(check)) {
                                     check = hackType.toString();
                                     exists = true;
@@ -640,7 +641,7 @@ public class CommandExecution implements CommandExecutor {
                                 }
                             }
                             if (exists) {
-                                CheckEnums.HackType type = CheckEnums.HackType.valueOf(check);
+                                CheckEnums.CheckType type = CheckEnums.CheckType.valueOf(check);
                                 Check checkObj = type.getCheck();
 
                                 if (checkObj.canPunish(null)) {
@@ -805,7 +806,7 @@ public class CommandExecution implements CommandExecutor {
                             boolean noSeconds = args.length == 3;
 
                             if (noSeconds || args.length == 4) {
-                                CheckEnums.HackType[] hackTypes = CheckEnums.HackType.values();
+                                CheckEnums.CheckType[] hackTypes = CheckEnums.CheckType.values();
                                 int maxHackTypes = hackTypes.length;
                                 String[] checks = args[2].split(",", maxHackTypes);
                                 String sec = noSeconds ? null : args[3];
@@ -830,10 +831,10 @@ public class CommandExecution implements CommandExecutor {
                                     );
                                     return true;
                                 }
-                                List<CheckEnums.HackType> found = new ArrayList<>(maxHackTypes);
+                                List<CheckEnums.CheckType> found = new ArrayList<>(maxHackTypes);
 
                                 for (String check : checks) {
-                                    for (CheckEnums.HackType hackType : hackTypes) {
+                                    for (CheckEnums.CheckType hackType : hackTypes) {
                                         if (hackType.getCheck().getName().equalsIgnoreCase(check)) {
                                             found.add(hackType);
                                             break;
@@ -845,7 +846,7 @@ public class CommandExecution implements CommandExecutor {
                                         sender.sendMessage(ChatColor.RED + "Seconds must be between 1 and 3600.");
                                         return true;
                                     }
-                                    for (CheckEnums.HackType hackType : found) {
+                                    for (CheckEnums.CheckType hackType : found) {
                                         int seconds = noSeconds ? 0 : Integer.parseInt(sec);
 
                                         if (noSeconds) {

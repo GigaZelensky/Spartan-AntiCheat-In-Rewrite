@@ -1,7 +1,6 @@
 package com.vagdedes.spartan.abstraction.check;
 
 import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
-import com.vagdedes.spartan.compatibility.Compatibility;
 import ai.idealistic.spartan.compatibility.manual.abilities.ItemsAdder;
 import ai.idealistic.spartan.compatibility.manual.building.MythicMobs;
 import ai.idealistic.spartan.compatibility.manual.enchants.CustomEnchantsPlus;
@@ -29,7 +28,7 @@ public abstract class CheckRunner extends CheckProcess {
     private boolean cancelled;
     private final Map<String, CheckDetection> detections;
 
-    public CheckRunner(CheckEnums.HackType hackType, PlayerProtocol protocol) {
+    public CheckRunner(CheckEnums.CheckType hackType, PlayerProtocol protocol) {
         super(hackType, protocol);
         this.creation = System.currentTimeMillis();
         this.detections = new ConcurrentHashMap<>(2);

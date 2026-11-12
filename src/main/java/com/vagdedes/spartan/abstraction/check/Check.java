@@ -5,7 +5,6 @@ import com.vagdedes.spartan.api.CheckPunishmentToggleEvent;
 import com.vagdedes.spartan.api.CheckSilentToggleEvent;
 import com.vagdedes.spartan.api.CheckToggleEvent;
 import com.vagdedes.spartan.api.ToggleAction;
-import com.vagdedes.spartan.functionality.moderation.AwarenessNotifications;
 import com.vagdedes.spartan.functionality.server.Config;
 import com.vagdedes.spartan.functionality.tracking.ResearchEngine;
 import com.vagdedes.spartan.utils.AlgebraUtils;
@@ -95,8 +94,7 @@ public class Check {
 
     // Object
 
-    public final CheckEnums.HackType hackType;
-    @Getter
+    public final CheckEnums.CheckType hackType;
     private String name;
     private final Map<String, Object> options;
     public final boolean handleCancelledEvents;
@@ -119,7 +117,7 @@ public class Check {
 
     // Object Methods
 
-    public Check(CheckEnums.HackType hackType) {
+    public Check(CheckEnums.CheckType hackType) {
         this.options = new ConcurrentHashMap<>();
         this.hackType = hackType;
 
@@ -309,7 +307,7 @@ public class Check {
         if (name.length() > 32) {
             name = name.substring(0, 32);
         }
-        for (CheckEnums.HackType hackType : CheckEnums.HackType.values()) {
+        for (CheckEnums.CheckType hackType : CheckEnums.CheckType.values()) {
             if (!hackType.equals(this.hackType)
                     && (name.equalsIgnoreCase(hackType.toString()))
                     || name.equalsIgnoreCase(hackType.getCheck().getName())) {

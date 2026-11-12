@@ -2,10 +2,9 @@ package com.vagdedes.spartan.utils;
 
 import com.vagdedes.spartan.Register;
 import com.vagdedes.spartan.abstraction.check.Check;
-import com.vagdedes.spartan.abstraction.check.CheckEnums.HackType;
+import com.vagdedes.spartan.abstraction.check.CheckEnums.CheckType;
 import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
 import com.vagdedes.spartan.api.SpartanAPI;
-import com.vagdedes.spartan.functionality.moderation.CrossServerNotifications;
 import com.vagdedes.spartan.functionality.server.MultiVersion;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -25,7 +24,7 @@ public class ConfigUtils {
         return message.replace(target, replacement);
     }
 
-    public static String replaceWithSyntax(String message, HackType hackType) {
+    public static String replaceWithSyntax(String message, CheckType hackType) {
         message = replace(message, "{space}", " ");
         message = replace(message, "{online}", String.valueOf(PluginBase.getPlayerCount()));
         message = replace(message, "{motd}", Bukkit.getMotd());
@@ -48,7 +47,7 @@ public class ConfigUtils {
         return message;
     }
 
-    public static String replaceWithSyntax(PlayerProtocol p, String message, HackType hackType) {
+    public static String replaceWithSyntax(PlayerProtocol p, String message, CheckType hackType) {
         Location loc = p.getLocationOrVehicle();
         String worldName = loc.getWorld().getName();
         message = replace(message, "{player}", p.bukkit().getName());
@@ -71,7 +70,7 @@ public class ConfigUtils {
         return ChatColor.translateAlternateColorCodes('&', replaceWithSyntax(message, hackType));
     }
 
-    public static String replaceWithSyntax(OfflinePlayer off, String message, HackType hackType) {
+    public static String replaceWithSyntax(OfflinePlayer off, String message, CheckType hackType) {
         boolean hasHackType = hackType != null;
 
         if (off.isOnline()) {

@@ -1,9 +1,8 @@
 package com.vagdedes.spartan.functionality.connection;
 
 import com.vagdedes.spartan.Register;
-import com.vagdedes.spartan.functionality.moderation.AwarenessNotifications;
-import com.vagdedes.spartan.functionality.moderation.CrossServerNotifications;
 import com.vagdedes.spartan.functionality.server.Config;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 import java.io.OutputStream;
@@ -11,8 +10,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class CloudConnections {
+
+    private static final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public static void executeDiscordWebhook(String webhook, UUID uuid, String name, int ping, int x, int y, int z, String type, String information) {
         String urlString = Config.settings.getString("Discord." + webhook + "_webhook_url");
@@ -21,9 +24,9 @@ public class CloudConnections {
                 || (!urlString.startsWith("https://") && !urlString.startsWith("http://"))) {
             return;
         }
-        PluginBase.connectionThread.executeIfUnknownThreadElseHere(() -> {
+        executor.submit(() -> {
             try {
-                String serverName = CrossServerNotifications.getServerName();
+                String serverName = Config.settings.getString("Discord.server_name");
                 String titleSuffix = (serverName != null && !serverName.isEmpty() && !serverName.equals("NULL"))
                         ? " (" + serverName + ")"
                         : "";
@@ -74,11 +77,11 @@ public class CloudConnections {
 
                 if (responseCode < 200
                         || responseCode > 299) {
-                    AwarenessNotifications.optionallySend("Webhook failed: " + responseCode);
+                    Bukkit.getConsoleSender().sendMessage("[Spartan] Webhook failed response code: "  + responseCode);
                 }
 
             } catch (Exception e) {
-                AwarenessNotifications.optionallySend("Webhook exception: " + e.getMessage());
+                Bukkit.getConsoleSender().sendMessage("[Spartan] Webhook error: "  + e.getMessage());
             }
         });
     }
