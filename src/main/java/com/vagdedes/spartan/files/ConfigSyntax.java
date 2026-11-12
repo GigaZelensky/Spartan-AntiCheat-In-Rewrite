@@ -2,7 +2,7 @@ package com.vagdedes.spartan.files;
 
 import com.vagdedes.spartan.Register;
 import com.vagdedes.spartan.base.Detection;
-import com.vagdedes.spartan.math.AlgebraUtils;
+import com.vagdedes.spartan.math.NumberConversions;
 import com.vagdedes.spartan.support.Floodgate;
 import com.vagdedes.spartan.support.Versions;
 import org.bukkit.Bukkit;
@@ -54,8 +54,8 @@ public class ConfigSyntax {
         message = replace(message, "{x}", String.valueOf(loc.getBlockX()));
         message = replace(message, "{y}", String.valueOf(loc.getBlockY()));
         message = replace(message, "{z}", String.valueOf(loc.getBlockZ()));
-        message = replace(message, "{yaw}", String.valueOf(AlgebraUtils.integerRound(loc.getYaw())));
-        message = replace(message, "{pitch}", String.valueOf(AlgebraUtils.integerRound(loc.getPitch())));
+        message = replace(message, "{yaw}", String.valueOf(NumberConversions.integerRound(loc.getYaw())));
+        message = replace(message, "{pitch}", String.valueOf(NumberConversions.integerRound(loc.getPitch())));
         return ChatColor.translateAlternateColorCodes('&', replaceWithSyntax(message, detection));
     }
 

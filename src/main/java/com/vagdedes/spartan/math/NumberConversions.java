@@ -1,28 +1,17 @@
 package com.vagdedes.spartan.math;
 
-import com.vagdedes.spartan.abstraction.world.ServerLocation;
-import lombok.experimental.UtilityClass;
-import org.bukkit.Location;
-import org.bukkit.util.NumberConversions;
-import org.bukkit.util.Vector;
-
-import java.util.Random;
-
-@UtilityClass
-public class AlgebraUtils {
-
-    public static final double SQUARE_ROOT_2 = Math.sqrt(2.0);
+public class NumberConversions {
 
     public static int integerFloor(double d) {
-        return NumberConversions.floor(d);
+        return org.bukkit.util.NumberConversions.floor(d);
     }
 
     public static int integerRound(double d) {
-        return NumberConversions.round(d);
+        return org.bukkit.util.NumberConversions.round(d);
     }
 
     public static int integerCeil(double d) {
-        return NumberConversions.ceil(d);
+        return org.bukkit.util.NumberConversions.ceil(d);
     }
 
     public static double integersToDouble(int a, int b) {
@@ -107,80 +96,8 @@ public class AlgebraUtils {
         return d * d;
     }
 
-    public static double getSquaredDistance(double x1, double x2, double y1, double y2, double z1, double z2) {
-        return getSquare(x1, x2) + getSquare(y1, y2) + getSquare(z1, z2);
-    }
-
-    public static double getDistance(double x1, double x2, double y1, double y2, double z1, double z2) {
-        return Math.sqrt(getSquaredDistance(x1, x2, y1, y2, z1, z2));
-    }
-
-    // Separator
-
-    public static int generalize(double number, int level) {
-        return integerCeil(number * level);
-    }
-
-    // Separator
-
     public static double findGCD(double limit, double first, double second) {
         return second <= limit ? first : findGCD(limit, second, first % second);
-    }
-
-    // Separator
-
-    public static double getHorizontalDistance(Location loc, Vector vec) {
-        return Math.sqrt(getSquare(loc.getX(), vec.getX()) + getSquare(loc.getZ(), vec.getZ()));
-    }
-
-    public static double getHorizontalDistance(Vector vec, Location loc) {
-        return getHorizontalDistance(loc, vec);
-    }
-
-    public static double getHorizontalDistance(ServerLocation loc, Vector vec) {
-        return Math.sqrt(getSquare(loc.getX(), vec.getX()) + getSquare(loc.getZ(), vec.getZ()));
-    }
-
-    public static double getHorizontalDistance(Vector vec, ServerLocation loc) {
-        return getHorizontalDistance(loc, vec);
-    }
-
-    public static double getHorizontalDistance(Location loc1, ServerLocation loc2) {
-        return Math.sqrt(getSquare(loc1.getX(), loc2.getX()) + getSquare(loc1.getZ(), loc2.getZ()));
-    }
-
-    public static double getHorizontalDistance(ServerLocation loc1, Location loc2) {
-        return getHorizontalDistance(loc2, loc1);
-    }
-
-    public static double getHorizontalDistance(Vector vec1, Vector vec2) {
-        return Math.sqrt(getSquare(vec1.getX(), vec2.getX()) + getSquare(vec1.getZ(), vec2.getZ()));
-    }
-
-    public static double getHorizontalDistance(Location loc1, Location loc2) {
-        return Math.sqrt(getSquare(loc1.getX(), loc2.getX()) + getSquare(loc1.getZ(), loc2.getZ()));
-    }
-
-    public static double getHorizontalDistance(ServerLocation loc1, ServerLocation loc2) {
-        return Math.sqrt(getSquare(loc1.getX(), loc2.getX()) + getSquare(loc1.getZ(), loc2.getZ()));
-    }
-
-    // Separator
-
-    public static double getVerticalDistance(Location loc1, ServerLocation loc2) {
-        return Math.sqrt(getSquare(loc1.getY(), loc2.getY()));
-    }
-
-    public static double getVerticalDistance(ServerLocation loc1, Location loc2) {
-        return getVerticalDistance(loc2, loc1);
-    }
-
-    public static double getVerticalDistance(Location loc1, Location loc2) {
-        return Math.sqrt(getSquare(loc1.getY(), loc2.getY()));
-    }
-
-    public static double getVerticalDistance(ServerLocation loc1, ServerLocation loc2) {
-        return Math.sqrt(getSquare(loc1.getY(), loc2.getY()));
     }
 
     // Separator
@@ -207,20 +124,6 @@ public class AlgebraUtils {
             value += 360.0;
         }
         return value;
-    }
-
-    // Separator
-
-    public static int randomInteger(int one, int two) {
-        return new Random().nextInt(Math.abs(two - one)) + one;
-    }
-
-    public static double randomDouble(double one, double two) {
-        return one + (two - one) * new Random().nextDouble();
-    }
-
-    public static float randomFloat(float one, float two) {
-        return one + (two - one) * new Random().nextFloat();
     }
 
     // Separator

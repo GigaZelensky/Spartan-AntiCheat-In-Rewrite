@@ -1,9 +1,9 @@
 package com.vagdedes.spartan;
 
+import com.vagdedes.spartan.files.ConfigManagement;
+import com.vagdedes.spartan.math.NumberConversions;
 import com.vagdedes.spartan.support.Commands;
 import com.vagdedes.spartan.support.TabCompletion;
-import com.vagdedes.spartan.files.ConfigManagement;
-import com.vagdedes.spartan.math.AlgebraUtils;
 import com.vagdedes.spartan.support.Versions;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
@@ -24,7 +24,7 @@ public class Register extends JavaPlugin {
             resource = "%%__RESOURCE__%%";
 
     private static final boolean
-            hasResourceId = AlgebraUtils.validInteger(resource),
+            hasResourceId = NumberConversions.validInteger(resource),
             builtByBit = "%%__BUILTBYBIT__%%".length() != 18,
             spigot = !builtByBit && hasResourceId;
 

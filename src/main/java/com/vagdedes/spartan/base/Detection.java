@@ -2,7 +2,7 @@ package com.vagdedes.spartan.base;
 
 import com.vagdedes.spartan.Register;
 import com.vagdedes.spartan.files.ConfigManagement;
-import com.vagdedes.spartan.math.AlgebraUtils;
+import com.vagdedes.spartan.math.NumberConversions;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -362,7 +362,7 @@ public class Detection {
                 sectionString += ".";
 
                 for (String key : keys) {
-                    if (AlgebraUtils.validInteger(key)) {
+                    if (NumberConversions.validInteger(key)) {
                         int number = Integer.parseInt(key);
 
                         if (number >= 1 && number <= Detection.maxCommands) {
