@@ -1,22 +1,19 @@
-package com.vagdedes.spartan.functionality.server;
+package com.vagdedes.spartan.functionality;
 
 import com.vagdedes.spartan.Register;
-import com.vagdedes.spartan.abstraction.check.CheckEnums.CheckType;
-import com.vagdedes.spartan.abstraction.configuration.ConfigurationBuilder;
-import com.vagdedes.spartan.abstraction.configuration.implementation.Advanced;
-import com.vagdedes.spartan.abstraction.configuration.implementation.Messages;
-import com.vagdedes.spartan.abstraction.configuration.implementation.Settings;
+import com.vagdedes.spartan.base.CheckEnums.CheckType;
+import com.vagdedes.spartan.utils.ConfigurationBuilder;
+import com.vagdedes.spartan.configuration.Messages;
+import com.vagdedes.spartan.configuration.Settings;
 
 public class Config {
 
     public static final Settings settings = new Settings();
     public static final Messages messages = new Messages();
-    public static final Advanced advanced = new Advanced();
 
     public static final ConfigurationBuilder[] configurations = {
             settings,
-            messages,
-            advanced
+            messages
     };
 
     public static void create() {

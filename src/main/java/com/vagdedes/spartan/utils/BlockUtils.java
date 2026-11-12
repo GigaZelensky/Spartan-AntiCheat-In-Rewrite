@@ -3,7 +3,7 @@ package com.vagdedes.spartan.utils;
 import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
 import com.vagdedes.spartan.abstraction.world.ServerBlock;
 import com.vagdedes.spartan.abstraction.world.ServerLocation;
-import com.vagdedes.spartan.functionality.server.MultiVersion;
+import com.vagdedes.spartan.functionality.MultiVersion;
 import ai.idealistic.spartan.listeners.bukkit.standalone.ChunksEvent;
 import com.vagdedes.spartan.utils.java.ReflectionUtils;
 import lombok.experimental.UtilityClass;

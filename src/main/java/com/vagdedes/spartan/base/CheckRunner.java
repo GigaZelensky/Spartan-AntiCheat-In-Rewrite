@@ -1,4 +1,4 @@
-package com.vagdedes.spartan.abstraction.check;
+package com.vagdedes.spartan.base;
 
 import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
 import ai.idealistic.spartan.compatibility.manual.abilities.ItemsAdder;
@@ -7,9 +7,9 @@ import ai.idealistic.spartan.compatibility.manual.enchants.CustomEnchantsPlus;
 import ai.idealistic.spartan.compatibility.manual.enchants.EcoEnchants;
 import com.vagdedes.spartan.compatibility.Attributes;
 import ai.idealistic.spartan.compatibility.necessary.protocollib.ProtocolLib;
-import com.vagdedes.spartan.functionality.moderation.DetectionNotifications;
-import com.vagdedes.spartan.functionality.server.MultiVersion;
-import com.vagdedes.spartan.functionality.server.Permissions;
+import com.vagdedes.spartan.functionality.DetectionNotifications;
+import com.vagdedes.spartan.functionality.MultiVersion;
+import com.vagdedes.spartan.functionality.Permissions;
 import com.vagdedes.spartan.functionality.tracking.LimitedEdition;
 import com.vagdedes.spartan.utils.AlgebraUtils;
 import com.vagdedes.spartan.utils.PlayerUtils;

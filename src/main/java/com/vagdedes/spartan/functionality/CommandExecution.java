@@ -1,14 +1,11 @@
-package com.vagdedes.spartan.functionality.command;
+package com.vagdedes.spartan.functionality;
 
 import com.vagdedes.spartan.Register;
-import com.vagdedes.spartan.abstraction.check.Check;
-import com.vagdedes.spartan.abstraction.check.CheckEnums;
+import com.vagdedes.spartan.base.Check;
+import com.vagdedes.spartan.base.CheckEnums;
 import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
 import com.vagdedes.spartan.api.Permission;
-import com.vagdedes.spartan.functionality.moderation.DetectionNotifications;
 import com.vagdedes.spartan.functionality.moderation.clickable.ClickableMessage;
-import com.vagdedes.spartan.functionality.server.Config;
-import com.vagdedes.spartan.functionality.server.Permissions;
 import com.vagdedes.spartan.utils.java.StringUtils;
 import com.vagdedes.spartan.utils.AlgebraUtils;
 import com.vagdedes.spartan.utils.ConfigUtils;

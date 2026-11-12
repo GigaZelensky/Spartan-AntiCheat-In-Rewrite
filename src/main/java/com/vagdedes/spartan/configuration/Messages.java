@@ -1,7 +1,7 @@
-package com.vagdedes.spartan.abstraction.configuration.implementation;
+package com.vagdedes.spartan.configuration;
 
 import com.vagdedes.spartan.Register;
-import com.vagdedes.spartan.abstraction.configuration.ConfigurationBuilder;
+import com.vagdedes.spartan.utils.ConfigurationBuilder;
 
 public class Messages extends ConfigurationBuilder {
 

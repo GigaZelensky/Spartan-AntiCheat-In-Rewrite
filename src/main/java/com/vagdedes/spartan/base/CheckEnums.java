@@ -1,4 +1,4 @@
-package com.vagdedes.spartan.abstraction.check;
+package com.vagdedes.spartan.base;
 
 public class CheckEnums {
 

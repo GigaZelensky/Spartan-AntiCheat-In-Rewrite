@@ -1,18 +1,9 @@
-package com.vagdedes.spartan.functionality.server;
+package com.vagdedes.spartan.functionality;
 
-import ai.idealistic.spartan.compatibility.necessary.protocollib.ProtocolLib;
-import com.vagdedes.spartan.utils.java.ReflectionUtils;
-import com.vagdedes.spartan.utils.minecraft.server.PluginUtils;
-import com.comphenix.protocol.ProtocolLibrary;
-import com.viaversion.viaversion.api.Via;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
 public class MultiVersion {
 
-    private static final boolean paperClass = ReflectionUtils.classExists(
-            "com.destroystokyo.paper.network.NetworkClient"
-    );
     public static final MCVersion serverVersion;
     public static final boolean folia;
 
@@ -62,31 +53,6 @@ public class MultiVersion {
 
     public static boolean isOrGreater(MCVersion trialVersion) {
         return serverVersion.ordinal() >= trialVersion.ordinal();
-    }
-
-    public static MCVersion get(Player player) {
-        int protocol;
-
-        if (ProtocolLib.isTemporary(player)) {
-            protocol = -1;
-        } else if (PluginUtils.exists("viaversion")) {
-            protocol = Via.getAPI().getPlayerVersion(player);
-        } else if (paperClass) {
-            protocol = player.getProtocolVersion();
-        } else if (PluginBase.packetsEnabled()) {
-            protocol = ProtocolLibrary.getProtocolManager().getProtocolVersion(player);
-        } else {
-            protocol = -1;
-        }
-
-        if (protocol >= 0) {
-            for (MCVersion version : MCVersion.values()) {
-                if (protocol <= version.maxProtocol) {
-                    return version;
-                }
-            }
-        }
-        return MultiVersion.MCVersion.OTHER;
     }
 
     private static MCVersion judge() {

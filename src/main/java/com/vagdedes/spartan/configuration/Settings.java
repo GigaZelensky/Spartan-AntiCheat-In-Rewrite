@@ -1,7 +1,7 @@
-package com.vagdedes.spartan.abstraction.configuration.implementation;
+package com.vagdedes.spartan.configuration;
 
-import com.vagdedes.spartan.abstraction.configuration.ConfigurationBuilder;
-import com.vagdedes.spartan.functionality.moderation.DetectionNotifications;
+import com.vagdedes.spartan.utils.ConfigurationBuilder;
+import com.vagdedes.spartan.functionality.DetectionNotifications;
 
 import java.util.Collection;
 

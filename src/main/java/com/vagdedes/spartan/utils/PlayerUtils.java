@@ -2,7 +2,7 @@ package com.vagdedes.spartan.utils;
 
 import com.vagdedes.spartan.abstraction.protocol.ExtendedPotionEffect;
 import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
-import com.vagdedes.spartan.functionality.server.MultiVersion;
+import com.vagdedes.spartan.functionality.MultiVersion;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;

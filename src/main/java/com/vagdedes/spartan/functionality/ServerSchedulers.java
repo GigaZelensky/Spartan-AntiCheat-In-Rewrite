@@ -1,4 +1,4 @@
-package com.vagdedes.spartan.functionality.server;
+package com.vagdedes.spartan.functionality;
 
 import com.vagdedes.spartan.Register;
 import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;

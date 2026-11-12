@@ -1,9 +1,7 @@
-package com.vagdedes.spartan.functionality.moderation;
+package com.vagdedes.spartan.functionality;
 
 import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
 import com.vagdedes.spartan.api.Permission;
-import com.vagdedes.spartan.functionality.server.Config;
-import com.vagdedes.spartan.functionality.server.Permissions;
 
 import java.util.ArrayList;
 import java.util.List;

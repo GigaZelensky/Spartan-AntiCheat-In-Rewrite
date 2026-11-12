@@ -1,7 +1,6 @@
-package com.vagdedes.spartan.functionality.connection;
+package com.vagdedes.spartan.functionality;
 
 import com.vagdedes.spartan.Register;
-import com.vagdedes.spartan.functionality.server.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
@@ -13,11 +12,11 @@ import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class CloudConnections {
+public class DiscordWebhooks {
 
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    public static void executeDiscordWebhook(String webhook, UUID uuid, String name, int ping, int x, int y, int z, String type, String information) {
+    public static void execute(String webhook, UUID uuid, String name, int ping, int x, int y, int z, String type, String information) {
         String urlString = Config.settings.getString("Discord." + webhook + "_webhook_url");
 
         if (urlString == null

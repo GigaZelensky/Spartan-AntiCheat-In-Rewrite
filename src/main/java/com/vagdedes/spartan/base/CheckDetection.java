@@ -1,15 +1,15 @@
-package com.vagdedes.spartan.abstraction.check;
+package com.vagdedes.spartan.base;
 
 import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
 import com.vagdedes.spartan.api.CheckCancelEvent;
 import com.vagdedes.spartan.api.PlayerViolationCommandEvent;
 import com.vagdedes.spartan.api.PlayerViolationEvent;
 import com.vagdedes.spartan.api.SpartanAPI;
-import com.vagdedes.spartan.functionality.connection.CloudConnections;
-import com.vagdedes.spartan.functionality.moderation.DetectionNotifications;
+import com.vagdedes.spartan.functionality.DiscordWebhooks;
+import com.vagdedes.spartan.functionality.DetectionNotifications;
 import com.vagdedes.spartan.functionality.moderation.clickable.ClickableMessage;
-import com.vagdedes.spartan.functionality.server.Config;
-import com.vagdedes.spartan.functionality.server.MultiVersion;
+import com.vagdedes.spartan.functionality.Config;
+import com.vagdedes.spartan.functionality.MultiVersion;
 import com.vagdedes.spartan.functionality.tracking.AntiCheatLogs;
 import com.vagdedes.spartan.functionality.tracking.ResearchEngine;
 import com.vagdedes.spartan.utils.AlgebraUtils;
@@ -317,7 +317,7 @@ public abstract class CheckDetection extends CheckProcess {
         );
 
         if (level >= notification) {
-            CloudConnections.executeDiscordWebhook(
+            DiscordWebhooks.execute(
                     "checks",
                     protocol.getUUID(),
                     protocol.bukkit().getName(),

@@ -1,7 +1,7 @@
-package com.vagdedes.spartan.functionality.server;
+package com.vagdedes.spartan.functionality;
 
 import com.vagdedes.spartan.Register;
-import com.vagdedes.spartan.abstraction.check.CheckEnums;
+import com.vagdedes.spartan.base.CheckEnums;
 import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
 import com.vagdedes.spartan.api.Permission;
 import ai.idealistic.spartan.compatibility.necessary.protocollib.ProtocolLib;

@@ -1,6 +1,6 @@
 package com.vagdedes.spartan.compatibility;
 
-import com.vagdedes.spartan.functionality.server.Config;
+import com.vagdedes.spartan.functionality.Config;
 import com.vagdedes.spartan.utils.java.ReflectionUtils;
 import org.geysermc.floodgate.api.FloodgateApi;
 

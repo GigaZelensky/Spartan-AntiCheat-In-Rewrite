@@ -4,7 +4,8 @@ import com.vagdedes.spartan.abstraction.protocol.ExtendedPotionEffect;
 import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
 import com.vagdedes.spartan.abstraction.world.ServerBlock;
 import com.vagdedes.spartan.abstraction.world.ServerLocation;
-import com.vagdedes.spartan.functionality.server.MultiVersion;
+import com.vagdedes.spartan.compatibility.Enchantments;
+import com.vagdedes.spartan.functionality.MultiVersion;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
@@ -237,7 +238,7 @@ public class MaterialUtils {
                 if (!canHarvest) {
                     multiplier = 1.0;
                 } else {
-                    int enchantmentLevel = itemStack.getEnchantmentLevel(EnchantmentUtils.DIG_SPEED);
+                    int enchantmentLevel = itemStack.getEnchantmentLevel(Enchantments.DIG_SPEED);
 
                     if (enchantmentLevel > 0) {
                         multiplier += Math.pow(enchantmentLevel, 2) + 1.0;
@@ -273,7 +274,7 @@ public class MaterialUtils {
             if (water) {
                 boolean aquaInfinity = false;
 
-                if (itemStack.getEnchantmentLevel(EnchantmentUtils.WATER_WORKER) > 0) {
+                if (itemStack.getEnchantmentLevel(Enchantments.WATER_WORKER) > 0) {
                     aquaInfinity = true;
                 } else {
                     PlayerInventory inventory = protocol.getInventory();
@@ -282,7 +283,7 @@ public class MaterialUtils {
                     items.add(inventory.getItemInHand());
 
                     for (ItemStack item : items) {
-                        if (item != null && item.getEnchantmentLevel(EnchantmentUtils.WATER_WORKER) > 0) {
+                        if (item != null && item.getEnchantmentLevel(Enchantments.WATER_WORKER) > 0) {
                             aquaInfinity = true;
                             break;
                         }

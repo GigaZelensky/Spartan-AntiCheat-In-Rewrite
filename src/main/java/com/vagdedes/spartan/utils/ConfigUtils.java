@@ -1,11 +1,10 @@
 package com.vagdedes.spartan.utils;
 
-import com.vagdedes.spartan.Register;
-import com.vagdedes.spartan.abstraction.check.Check;
-import com.vagdedes.spartan.abstraction.check.CheckEnums.CheckType;
+import com.vagdedes.spartan.base.Check;
+import com.vagdedes.spartan.base.CheckEnums.CheckType;
 import com.vagdedes.spartan.abstraction.protocol.PlayerProtocol;
 import com.vagdedes.spartan.api.SpartanAPI;
-import com.vagdedes.spartan.functionality.server.MultiVersion;
+import com.vagdedes.spartan.functionality.MultiVersion;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -125,18 +124,6 @@ public class ConfigUtils {
             filea.save(file);
         } catch (Exception ignored) {
         }
-    }
-
-    public static void add(String path, Object value) {
-        if (!Register.plugin.getConfig().contains(path)) {
-            set(path, value);
-        }
-    }
-
-    public static void set(String path, Object value) {
-        Register.plugin.getConfig().set(path, value);
-        Register.plugin.saveConfig();
-        Register.plugin.reloadConfig();
     }
 
 }

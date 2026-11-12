@@ -1,7 +1,6 @@
-package com.vagdedes.spartan.abstraction.configuration;
+package com.vagdedes.spartan.utils;
 
 import com.vagdedes.spartan.Register;
-import com.vagdedes.spartan.utils.ConfigUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 
