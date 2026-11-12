@@ -1,14 +1,10 @@
 name: Spartan
-authors: [Evangelos Dedes @Vagdedes - Since 2016, pawsashatoy - Since 2024]
-main: ai.idealistic.spartan.Register
-version: 4.0.9.1
-website: https://spartan.top
-description: The longest living Minecraft paid anti cheat!
+author: Vagdedes
+main: com.vagdedes.spartan.Register
+version: Build 1
+website: https://vagdedes.com
+description: Machine learning Minecraft anti cheat
 api-version: 1.13
-softdepend: [mcMMO, ProtocolSupport, VeinMiner, EcoEnchants, CustomEnchantsPlus,
-             aSkyBlock, AdvancedAbilities, CrackShot, CrackShotPlus, CraftBook, GrapplingHook, ProtocolLib,
-             MagicSpells, MineBomb, MineTinker, MythicMobs, PrinterMode, ProjectKorra, RealDualWield,
-             SuperPickaxe, TreeFeller, Vehicles, WildTools, floodgate-bukkit]
 load: POSTWORLD
 folia-supported: true
 commands:

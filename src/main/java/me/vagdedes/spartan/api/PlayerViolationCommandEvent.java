@@ -1,6 +1,6 @@
 package me.vagdedes.spartan.api;
 
-import ai.idealistic.spartan.abstraction.check.CheckEnums.HackType;
+import com.vagdedes.spartan.abstraction.check.CheckEnums.HackType;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.entity.Player;

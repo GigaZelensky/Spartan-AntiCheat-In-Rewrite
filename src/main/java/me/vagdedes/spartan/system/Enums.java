@@ -1,6 +1,6 @@
 package me.vagdedes.spartan.system;
 
-import ai.idealistic.spartan.abstraction.check.CheckEnums;
+import com.vagdedes.spartan.abstraction.check.CheckEnums;
 import lombok.Getter;
 
 public class Enums {
@@ -39,36 +39,36 @@ public class Enums {
 
     // API Use
     public enum Permission {
-        CONDITION(ai.idealistic.spartan.api.Permission.CONDITION),
-        WAVE(ai.idealistic.spartan.api.Permission.WAVE),
-        ADMIN(ai.idealistic.spartan.api.Permission.ADMIN),
-        RELOAD(ai.idealistic.spartan.api.Permission.RELOAD),
-        KICK(ai.idealistic.spartan.api.Permission.KICK),
-        BYPASS(ai.idealistic.spartan.api.Permission.BYPASS),
-        MANAGE(ai.idealistic.spartan.api.Permission.MANAGE),
-        INFO(ai.idealistic.spartan.api.Permission.INFO),
-        WARN(ai.idealistic.spartan.api.Permission.WARN),
-        USE_BYPASS(ai.idealistic.spartan.api.Permission.USE_BYPASS),
-        NOTIFICATIONS(ai.idealistic.spartan.api.Permission.NOTIFICATIONS),
-        BEDROCK(ai.idealistic.spartan.api.Permission.BEDROCK);
+        CONDITION(com.vagdedes.spartan.api.Permission.CONDITION),
+        WAVE(com.vagdedes.spartan.api.Permission.WAVE),
+        ADMIN(com.vagdedes.spartan.api.Permission.ADMIN),
+        RELOAD(com.vagdedes.spartan.api.Permission.RELOAD),
+        KICK(com.vagdedes.spartan.api.Permission.KICK),
+        BYPASS(com.vagdedes.spartan.api.Permission.BYPASS),
+        MANAGE(com.vagdedes.spartan.api.Permission.MANAGE),
+        INFO(com.vagdedes.spartan.api.Permission.INFO),
+        WARN(com.vagdedes.spartan.api.Permission.WARN),
+        USE_BYPASS(com.vagdedes.spartan.api.Permission.USE_BYPASS),
+        NOTIFICATIONS(com.vagdedes.spartan.api.Permission.NOTIFICATIONS),
+        BEDROCK(com.vagdedes.spartan.api.Permission.BEDROCK);
 
         @Getter
-        private final ai.idealistic.spartan.api.Permission permission;
+        private final com.vagdedes.spartan.api.Permission permission;
 
-        Permission(ai.idealistic.spartan.api.Permission permission) {
+        Permission(com.vagdedes.spartan.api.Permission permission) {
             this.permission = permission;
         }
     }
 
     // API Use
     public enum ToggleAction {
-        ENABLE(ai.idealistic.spartan.api.ToggleAction.ENABLE),
-        DISABLE(ai.idealistic.spartan.api.ToggleAction.DISABLE);
+        ENABLE(com.vagdedes.spartan.api.ToggleAction.ENABLE),
+        DISABLE(com.vagdedes.spartan.api.ToggleAction.DISABLE);
 
         @Getter
-        private final ai.idealistic.spartan.api.ToggleAction toggleAction;
+        private final com.vagdedes.spartan.api.ToggleAction toggleAction;
 
-        ToggleAction(ai.idealistic.spartan.api.ToggleAction toggleAction) {
+        ToggleAction(com.vagdedes.spartan.api.ToggleAction toggleAction) {
             this.toggleAction = toggleAction;
         }
     }
