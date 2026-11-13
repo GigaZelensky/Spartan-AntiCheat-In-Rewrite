@@ -1,1 +1,0 @@
-Completely rewritten the plugin to use Machine Learning, check the plugin's page for the updated information as almost everything has practically changed
